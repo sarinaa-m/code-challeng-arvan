@@ -3,15 +3,20 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { IAuthFormProp } from '../../interfaces/ILogin';
 import { Store } from 'antd/lib/form/interface';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/actions/AuthAction';
+import { AppDispatch } from '../../store/ConfigStore';
 
 
 const AuthForm: React.FC<IAuthFormProp> = ({ isRegister, additionalFields, title }) => {
     const [form] = Form.useForm()
     const { t } = useTranslation();
+    const dispatch = useDispatch<AppDispatch>()
 
     const onFinish = (values: Store) => {
         console.log('Success:', values);
-
+        debugger
+        dispatch(login(values))
     };
 
     return (

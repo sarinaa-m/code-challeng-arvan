@@ -1,10 +1,8 @@
 import { message } from "antd";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { getLoginData } from "../../redux/selectors/AppSelector";
 
 export const api = axios.create({
-  baseURL: "https://fridge.andronymous.ir/",
+  baseURL: "https://api.realworld.io/api/",
   withCredentials: true,
 });
 
@@ -30,43 +28,43 @@ const errorHandler = (error: any) => {
 
 api.interceptors.response.use(undefined, async (error: any) => {
   const status = error?.code;
-  switch (status) {
-    // TODO:check on 401
-    case "ERR_NETWORK":
-      try {
-        return api(error.config);
-      } catch (refreshError) {
-        console.error("Token refresh error:", refreshError);
-        // Redirect to the login page or perform other actions as needed
-        throw refreshError;
-      }
-    case 403:
-      try {
+  // switch (status) {
+  // TODO:check on 401
+  // case "ERR_NETWORK":
+  //   try {
+  //     return api(error.config);
+  //   } catch (refreshError) {
+  //     console.error("Token refresh error:", refreshError);
+  //     // Redirect to the login page or perform other actions as needed
+  //     throw refreshError;
+  //   }
+  // case 403:
+  //   try {
 
-        // If successful, retry the original request
-        return api(error.config);
-      } catch (refreshError) {
-        // Handle errors during token refresh
-        console.error("Token refresh error:", refreshError);
-        // Redirect to the login page or perform other actions as needed
-        throw refreshError;
-      }
-    default:
-      break;
-  }
+  //     // If successful, retry the original request
+  //     return api(error.config);
+  //   } catch (refreshError) {
+  //     // Handle errors during token refresh
+  //     console.error("Token refresh error:", refreshError);
+  //     // Redirect to the login page or perform other actions as needed
+  //     throw refreshError;
+  //   }
+  // default:
+  //   break;
+  // }
   return errorHandler(error);
 });
 
 // Add a request interceptor
 api.interceptors.request.use(
-  async (config) => {
+  async (config: any) => {
     const tokenKey: any = localStorage.getItem('token')
     if (tokenKey) {
       config.headers["Authorization"] = "Bearer " + tokenKey
     }
     return config;
   },
-  (error) => {
+  (error: any) => {
     Promise.reject(error);
   }
 );
