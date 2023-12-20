@@ -1,9 +1,41 @@
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import AuthForm from './components/authForm/AuthForm';
+
 
 
 function App() {
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/login",
+        element: (
+          <AuthForm title='login' />
+        ),
+
+      },
+      {
+        path: "/register",
+        element: (
+          <AuthForm
+            title='register'
+            isRegister={true}
+            additionalFields={[{ label: 'user', name: 'user', rules: [] }]}
+          />
+        ),
+
+      },
+
+    ],
+    {
+      basename: "/",
+    }
+  );
   return (
-    <h2>hello</h2>
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
   );
 }
 
