@@ -38,7 +38,6 @@ const AuthForm: React.FC<IAuthFormProp> = ({ isRegister, additionalFields, title
             <Form.Item
                 label={t('pages.login.email')}
                 name="email"
-                rules={[{ required: true, message: t('error.enterEmail') }]}
             >
                 <Input />
             </Form.Item>
