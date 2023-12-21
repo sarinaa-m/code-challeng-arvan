@@ -10,8 +10,8 @@ export interface IAuthAdditionalFields {
   rules: Array<IFormRules>;
 }
 export interface IFormRules {
-  required:boolean
-  message:string
+  required: boolean;
+  message: string;
 }
 export interface IAuth {
   login: {
