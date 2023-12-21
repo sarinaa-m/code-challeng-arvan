@@ -3,7 +3,6 @@ import axios from 'axios'
 
 export const api = axios.create({
   baseURL: 'https://api.realworld.io/api/',
-  withCredentials: true,
 })
 
 // defining a custom error handler for all APIs

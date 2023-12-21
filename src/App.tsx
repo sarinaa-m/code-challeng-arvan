@@ -20,7 +20,7 @@ function App() {
           <AuthForm
             title="register"
             isRegister
-            additionalFields={[{ label: 'user', name: 'user', rules: [] }]}
+            additionalFields={[{ label: 'user', name: 'username', rules: [] }]}
           />
         ),
       },
