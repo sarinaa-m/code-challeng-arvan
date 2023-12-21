@@ -31,6 +31,6 @@
     "react/no-unescaped-entities": ["off"],
     "import/prefer-default-export": ["off"],
     "no-param-reassign": ["error", { "props": false }],
-    "linebreak-style": 0
+    "linebreak-style": ["error", "unix"]
   }
 }
