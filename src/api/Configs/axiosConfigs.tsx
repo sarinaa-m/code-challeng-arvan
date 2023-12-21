@@ -1,20 +1,20 @@
-import { message } from "antd";
-import axios from "axios";
+import { message } from 'antd';
+import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: "https://api.realworld.io/api/",
+  baseURL: 'https://api.realworld.io/api/',
   withCredentials: true,
 });
 
 // defining a custom error handler for all APIs
 const errorHandler = (error: any) => {
   const statusCode = error.response?.status;
-  if (error.code === "ERR_CANCELED") {
-    message.error(`API Cancelled`);
+  if (error.code === 'ERR_CANCELED') {
+    message.error('API Cancelled');
     return Promise.resolve();
   }
-  if (error.code === "ERR_NETWORK") {
-    message.error(`ERR_NETWORK`);
+  if (error.code === 'ERR_NETWORK') {
+    message.error('ERR_NETWORK');
     return Promise.resolve();
   }
 
@@ -58,13 +58,13 @@ api.interceptors.response.use(undefined, async (error: any) => {
 // Add a request interceptor
 api.interceptors.request.use(
   async (config: any) => {
-    const tokenKey: any = localStorage.getItem('token')
+    const tokenKey: any = localStorage.getItem('token');
     if (tokenKey) {
-      config.headers["Authorization"] = "Bearer " + tokenKey
+      config.headers.Authorization = `Bearer ${tokenKey}`;
     }
     return config;
   },
   (error: any) => {
     Promise.reject(error);
-  }
+  },
 );

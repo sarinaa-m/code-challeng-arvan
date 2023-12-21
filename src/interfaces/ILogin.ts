@@ -1,9 +1,18 @@
 export interface IAuthFormProp {
   title: string;
   isRegister?: boolean;
-  additionalFields?: Array<{ label: string; name: string; rules: Array<any> }>;
+  additionalFields?: Array<IAuthAdditionalFields>;
 }
 
+export interface IAuthAdditionalFields {
+  label: string;
+  name: string;
+  rules: Array<IFormRules>;
+}
+export interface IFormRules {
+  required:boolean
+  message:string
+}
 export interface IAuth {
   login: {
     loading: boolean;
