@@ -1,11 +1,11 @@
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
-import React from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
-import AuthForm from './components/authForm/AuthForm';
-import AppLayout from './components/layout/AppLayout';
-import ArticleLists from './components/atricles/ArticleLists';
-import CreateArticles from './components/atricles/CreateArticles';
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
+import React from 'react'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import AuthForm from './components/authForm/AuthForm'
+import AppLayout from './components/layout/AppLayout'
+import ArticleLists from './components/atricles/ArticleLists'
+import CreateArticles from './components/atricles/CreateArticles'
 
 function App() {
   const router = createBrowserRouter(
@@ -51,28 +51,24 @@ function App() {
         children: [
           {
             path: '',
-            element: (
-              <ArticleLists />
-            ),
+            element: <ArticleLists />,
           },
           {
             path: 'create',
-            element: (
-              <CreateArticles />
-            ),
+            element: <CreateArticles />,
           },
         ],
       },
     ],
     {
       basename: '/',
-    },
-  );
+    }
+  )
   return (
     <ErrorBoundary>
       <RouterProvider router={router} />
     </ErrorBoundary>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,13 +1,13 @@
-import { Space, Table, Tag } from 'antd';
-import { ColumnsType } from 'antd/es/table';
-import React from 'react';
+import { Space, Table, Tag } from 'antd'
+import { ColumnsType } from 'antd/es/table'
+import React from 'react'
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  key: string
+  name: string
+  age: number
+  address: string
+  tags: string[]
 }
 
 export default function ArticleLists() {
@@ -35,15 +35,15 @@ export default function ArticleLists() {
       render: (_, { tags }) => (
         <>
           {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
+            let color = tag.length > 5 ? 'geekblue' : 'green'
             if (tag === 'loser') {
-              color = 'volcano';
+              color = 'volcano'
             }
             return (
               <Tag color={color} key={tag}>
                 {tag.toUpperCase()}
               </Tag>
-            );
+            )
           })}
         </>
       ),
@@ -61,7 +61,7 @@ export default function ArticleLists() {
         </Space>
       ),
     },
-  ];
+  ]
 
   const data: DataType[] = [
     {
@@ -85,6 +85,6 @@ export default function ArticleLists() {
       address: 'Sydney No. 1 Lake Park',
       tags: ['cool', 'teacher'],
     },
-  ];
-  return <Table columns={columns} dataSource={data} />;
+  ]
+  return <Table columns={columns} dataSource={data} />
 }

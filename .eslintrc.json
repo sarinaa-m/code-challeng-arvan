@@ -1,37 +1,31 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "jest": true
-  },
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "airbnb",
-    "airbnb-typescript",
-    "plugin:import/typescript",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
-  ],
   "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint", "react", "prettier"],
   "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    }
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
-    "react/react-in-jsx-scope": ["off"],
-    "react/jsx-uses-react": ["off"],
-    "react/jsx-props-no-spreading": ["warn"],
-    "react/no-unescaped-entities": ["off"],
-    "import/prefer-default-export": ["off"],
-    "no-param-reassign": ["error", { "props": false }],
-    "linebreak-style": ["error", "unix"],
-    "indent": ["error", 2]
+    "react/prop-types": "off", // Disable prop-types as we use TypeScript for type checking
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "prettier/prettier": ["error", { "singleQuote": true, "semi": false }]
   }
 }

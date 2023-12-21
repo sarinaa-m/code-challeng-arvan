@@ -1,12 +1,13 @@
-import { Button, Layout } from 'antd';
-import { Outlet } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import SideBar from './SideBar';
+import React from 'react'
+import { Button, Layout } from 'antd'
+import { Outlet } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import SideBar from './SideBar'
 
-const { Content, Header } = Layout;
+const { Content, Header } = Layout
 
-const AppLayout = function () {
-  const { t } = useTranslation();
+const AppLayout = () => {
+  const { t } = useTranslation()
 
   return (
     <Layout className="app-layout-wrapper">
@@ -23,7 +24,7 @@ const AppLayout = function () {
         </Content>
       </Layout>
     </Layout>
-  );
-};
+  )
+}
 
-export default AppLayout;
+export default AppLayout
