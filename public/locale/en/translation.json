@@ -3,6 +3,12 @@
     "enterPassword": "Please input your Password!",
     "enterEmail": "Please input your Email!"
   },
+  "components": {
+    "layout": {
+      "headerTitle": "Arvan Challenge",
+      "logout": "Logout"
+    }
+  },
 
   "pages": {
     "login": {

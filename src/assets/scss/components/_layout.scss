@@ -1,0 +1,11 @@
+.app-layout-wrapper {
+  min-height: 100vh;
+  .app-header {
+    color: $white;
+    font-size: 22px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

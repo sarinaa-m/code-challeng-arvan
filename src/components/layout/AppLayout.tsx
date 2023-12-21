@@ -1,20 +1,25 @@
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const {
   Footer, Header, Sider,
 } = Layout;
 
 const AppLayout = function () {
+  const { t } = useTranslation();
+
   return (
-    <Layout>
-      <Header>Header</Header>
+    <Layout className="app-layout-wrapper">
+      <Header className="app-header">
+        {t('components.layout.headerTitle')}
+        <Button type="primary" ghost>{t('components.layout.logout')}</Button>
+      </Header>
       <Layout>
-        <Sider width="25%">
+        <Sider>
           Sider
         </Sider>
 
       </Layout>
-      <Footer>Footer</Footer>
     </Layout>
   );
 };
