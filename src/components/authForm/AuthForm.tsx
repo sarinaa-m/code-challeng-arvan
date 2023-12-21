@@ -1,24 +1,39 @@
-import React from 'react'
-import { Button, Form, Input } from 'antd'
+import React, { useEffect } from 'react'
+import { Form, Input } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { IAuthFormProp } from '../../interfaces/ILogin'
 import { AppDispatch } from '../../store/ConfigStore'
-import login from '../../store/actions/AuthAction'
 import CustomButton from '../Button/CustomButton'
+import { loginUser, registerUser } from '../../store/actions/AuthAction'
 
-const AuthForm: React.FC<IAuthFormProp> = function ({
-  isRegister,
-  additionalFields,
+export const AuthForm: React.FC<IAuthFormProp> = ({
   title,
-}) {
+  additionalFields,
+  isRegister = false,
+}) => {
   const [form] = Form.useForm()
   const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
 
-  const onFinish = (values: any) => {
-    dispatch(login(values))
+  useEffect(() => {
+    form.resetFields()
+  }, [isRegister])
+
+  const onFinish = async (values: any) => {
+    if (isRegister) {
+      const result = await dispatch(registerUser(values))
+      if (result.type === 'auth/registerUser/fulfilled') {
+        navigate('/login')
+      }
+    } else {
+      const result = await dispatch(loginUser(values))
+      if (result.type === 'auth/loginUser/fulfilled') {
+        navigate('/articles')
+      }
+    }
   }
 
   return (
@@ -77,5 +92,3 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
     </Form>
   )
 }
-
-export default AuthForm

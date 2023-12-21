@@ -11,7 +11,7 @@ const CustomButton: React.FC<ICostumeBtn> = ({
 }) => {
   const { t } = useTranslation()
   const onClickBtn = () => {
-    onSubmit('ss')
+    onSubmit()
   }
   return (
     <Button

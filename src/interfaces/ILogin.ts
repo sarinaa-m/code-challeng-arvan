@@ -14,8 +14,17 @@ export interface IFormRules {
   message: string
 }
 export interface IAuth {
-  login: {
+  modifyUser: {
     loading: boolean
     error: string | undefined | null
+    data: {
+      user: {
+        email: string
+        username: string
+        bio: null
+        image: string
+        token: string
+      }
+    }
   }
 }
