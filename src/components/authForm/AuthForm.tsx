@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { IAuthFormProp } from '../../interfaces/ILogin'
 import { AppDispatch } from '../../store/ConfigStore'
 import login from '../../store/actions/AuthAction'
+import CustomButton from '../Button/CustomButton'
 
 const AuthForm: React.FC<IAuthFormProp> = function ({
   isRegister,
@@ -66,9 +67,12 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
         )}
       </p>
       <Form.Item>
-        <Button block type="primary" htmlType="submit">
-          {t('pages.login.login')}
-        </Button>
+        <CustomButton
+          block={true}
+          name={isRegister ? 'Register' : 'Login'}
+          type="primary"
+          onSubmit={form.submit}
+        />
       </Form.Item>
     </Form>
   )
