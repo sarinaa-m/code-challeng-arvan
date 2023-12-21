@@ -30,8 +30,7 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
       form={form}
     >
       <h2 className="header">{t(`pages.login.${title}`)}</h2>
-      {
-        additionalFields
+      {additionalFields
         && additionalFields.map((field: string | any) => (
           <Form.Item
             key={field.name}
@@ -41,8 +40,7 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
           >
             <Input />
           </Form.Item>
-        ))
-      }
+        ))}
       <Form.Item label={t('pages.login.email')} name="email">
         <Input />
       </Form.Item>

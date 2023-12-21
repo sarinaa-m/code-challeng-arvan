@@ -1,8 +1,9 @@
 import { Button, Layout } from 'antd';
+import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SideBar from './SideBar';
 
-const { Footer, Header, Sider } = Layout;
+const { Content, Header } = Layout;
 
 const AppLayout = function () {
   const { t } = useTranslation();
@@ -17,6 +18,9 @@ const AppLayout = function () {
       </Header>
       <Layout>
         <SideBar />
+        <Content>
+          <Outlet />
+        </Content>
       </Layout>
     </Layout>
   );
