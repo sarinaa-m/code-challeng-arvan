@@ -1,7 +1,9 @@
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import AuthForm from './components/authForm/AuthForm';
+import AppLayout from './components/layout/AppLayout';
 
 function App() {
   const router = createBrowserRouter(
@@ -9,6 +11,31 @@ function App() {
       {
         path: '/login',
         element: <AuthForm title="login" />,
+      },
+      {
+        path: '/articles',
+        element: (
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#5bc0de',
+              },
+              components: {
+                Layout: {
+                  siderBg: '#1c7cd5',
+                  headerBg: '#373a3c',
+                },
+                Menu: {
+                  darkItemBg: '#1c7cd5',
+                  darkItemColor: '#fff',
+                  darkItemSelectedBg: 'rgba(255, 255, 255, 0.15)',
+                },
+              },
+            }}
+          >
+            <AppLayout />
+          </ConfigProvider>
+        ),
       },
       {
         path: '/register',

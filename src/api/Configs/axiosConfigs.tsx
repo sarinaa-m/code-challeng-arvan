@@ -66,5 +66,5 @@ api.interceptors.request.use(
   },
   (error: any) => {
     Promise.reject(error);
-  },
+  }
 );
