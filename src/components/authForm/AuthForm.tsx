@@ -1,24 +1,24 @@
-import React from 'react';
-import { Button, Form, Input } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { IAuthFormProp } from '../../interfaces/ILogin';
-import { login } from '../../store/actions/AuthAction';
-import { AppDispatch } from '../../store/ConfigStore';
+import React from 'react'
+import { Button, Form, Input } from 'antd'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { IAuthFormProp } from '../../interfaces/ILogin'
+import { AppDispatch } from '../../store/ConfigStore'
+import login from '../../store/actions/AuthAction'
 
 const AuthForm: React.FC<IAuthFormProp> = function ({
   isRegister,
   additionalFields,
   title,
 }) {
-  const [form] = Form.useForm();
-  const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
+  const [form] = Form.useForm()
+  const { t } = useTranslation()
+  const dispatch = useDispatch<AppDispatch>()
 
   const onFinish = (values: any) => {
-    dispatch(login(values));
-  };
+    dispatch(login(values))
+  }
 
   return (
     <Form
@@ -30,9 +30,8 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
       form={form}
     >
       <h2 className="header">{t(`pages.login.${title}`)}</h2>
-      {
-        additionalFields
-        && additionalFields.map((field: string | any) => (
+      {additionalFields &&
+        additionalFields.map((field: string | any) => (
           <Form.Item
             key={field.name}
             label={t(`pages.login.${field.label}`)}
@@ -41,8 +40,7 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
           >
             <Input />
           </Form.Item>
-        ))
-      }
+        ))}
       <Form.Item label={t('pages.login.email')} name="email">
         <Input />
       </Form.Item>
@@ -73,7 +71,7 @@ const AuthForm: React.FC<IAuthFormProp> = function ({
         </Button>
       </Form.Item>
     </Form>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm
