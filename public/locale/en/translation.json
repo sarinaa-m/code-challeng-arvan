@@ -1,4 +1,8 @@
 {
+  "menu": {
+    "allArticles": "All Articles",
+    "newArticles": "New Articles"
+  },
   "error": {
     "enterPassword": "Please input your Password!",
     "enterEmail": "Please input your Email!"
@@ -9,7 +13,6 @@
       "logout": "Logout"
     }
   },
-
   "pages": {
     "login": {
       "email": "Email",

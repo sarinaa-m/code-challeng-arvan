@@ -15,17 +15,23 @@ function App() {
       {
         path: '/articles',
         element: (
-          <ConfigProvider theme={{
-            token: {
-              colorPrimary: '#5bc0de',
-            },
-            components: {
-              Layout: {
-                siderBg: '#1c7cd5',
-                headerBg: '#373a3c',
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#5bc0de',
               },
-            },
-          }}
+              components: {
+                Layout: {
+                  siderBg: '#1c7cd5',
+                  headerBg: '#373a3c',
+                },
+                Menu: {
+                  darkItemBg: '#1c7cd5',
+                  darkItemColor: '#fff',
+                  darkItemSelectedBg: 'rgba(255, 255, 255, 0.15)',
+                },
+              },
+            }}
           >
             <AppLayout />
           </ConfigProvider>
