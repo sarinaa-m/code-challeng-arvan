@@ -29,6 +29,7 @@ function getItem(
 
 const SideBar = function () {
   const { t } = useTranslation()
+
   const items: MenuItem[] = [
     getItem(<Link to="/articles">{t('menu.allArticles')}</Link>, 'all'),
 

@@ -12,10 +12,13 @@ import {
 import { AppDispatch } from '../../store/ConfigStore'
 import { addArticle, fetchTagList } from '../../store/actions/ArticleAction'
 import { setTagList } from '../../store/reducers/ArticleSlice'
+import { redirect, useNavigate } from 'react-router'
 const CreateArticles = function () {
   const [form] = Form.useForm()
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const { t } = useTranslation()
+
   const { data, loading } = useSelector(getTagData)
   const { loading: ArticleLoading } = useSelector(addArticleData)
 
@@ -36,6 +39,7 @@ const CreateArticles = function () {
     if (result.type === 'articles/addArticle/fulfilled') {
       form.resetFields()
       setSelectedTags([])
+      navigate('/articles')
     }
   }
 

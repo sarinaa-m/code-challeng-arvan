@@ -29,6 +29,7 @@
       "user": "User"
     },
     "article": {
+      "articlePageTitle": "All Posts",
       "title": "Title",
       "description": "Description",
       "body": "Body",

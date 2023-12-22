@@ -19,6 +19,7 @@ const ArticleLists = () => {
   useEffect(() => {
     dispatch(fetchArticles())
   }, [])
+
   const items: MenuProps['items'] = [
     {
       label: 'Edit',
@@ -31,6 +32,11 @@ const ArticleLists = () => {
   ]
 
   const columns: ColumnsType<IArticleData> = [
+    {
+      title: '#',
+      dataIndex: 'key',
+      rowScope: 'row',
+    },
     {
       title: 'Title',
       dataIndex: 'title',
@@ -77,19 +83,21 @@ const ArticleLists = () => {
     },
   ]
   const onClickArticle = ({ key, slug }: any) => {
-    debugger
     if (key === 'delete') {
       dispatch(deleteArticle(slug))
     }
   }
 
   return (
-    <Table
-      loading={loading}
-      scroll={{ x: 500 }}
-      columns={columns}
-      dataSource={data}
-    />
+    <div className="article-wrapper">
+      <p className="header">{t('pages.article.articlePageTitle')}</p>
+      <Table
+        loading={loading}
+        scroll={{ x: 500 }}
+        columns={columns}
+        dataSource={data}
+      />
+    </div>
   )
 }
 
