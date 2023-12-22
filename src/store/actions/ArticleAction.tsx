@@ -98,7 +98,6 @@ export const updateArticle = createAsyncThunk(
     try {
       const { slug } = payload.article
       const values = { ...payload }
-      debugger
       const result = await DataProvider.update(`articles/${slug}`, values)
       thunkAPI.dispatch(resetAddArticle())
       message.success(`Article updated Successfully`)

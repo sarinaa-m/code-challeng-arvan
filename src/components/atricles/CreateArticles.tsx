@@ -13,17 +13,20 @@ import {
 import { AppDispatch } from '../../store/ConfigStore'
 import {
   addArticle,
+  fetchArticleById,
   fetchTagList,
   updateArticle,
 } from '../../store/actions/ArticleAction'
 import { setTagList } from '../../store/reducers/ArticleSlice'
 import { redirect, useNavigate } from 'react-router'
+import { useParams } from 'react-router-dom'
+
 const CreateArticles = function () {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const { t } = useTranslation()
-
+  const { id: slug } = useParams()
   const { data, loading } = useSelector(getTagData)
   const { loading: articleLoading } = useSelector(addArticleData)
   const { item } = useSelector(getArticleById)
@@ -39,6 +42,12 @@ const CreateArticles = function () {
       form.setFieldsValue(item)
     }
   }, [item])
+
+  useEffect(() => {
+    if (slug) {
+      dispatch(fetchArticleById(slug))
+    }
+  }, [])
 
   const onFinish = async (values: any) => {
     const formValues = {
