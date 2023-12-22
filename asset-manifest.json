@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/code-challeng-arvan/static/css/main.6f177d4c.css",
+    "main.js": "/code-challeng-arvan/static/js/main.4a8f9ca6.js",
+    "static/js/787.2a081395.chunk.js": "/code-challeng-arvan/static/js/787.2a081395.chunk.js",
+    "index.html": "/code-challeng-arvan/index.html",
+    "static/media/getFetch.cjs": "/code-challeng-arvan/static/media/getFetch.40f37ddea2378391108f.cjs",
+    "main.6f177d4c.css.map": "/code-challeng-arvan/static/css/main.6f177d4c.css.map",
+    "main.4a8f9ca6.js.map": "/code-challeng-arvan/static/js/main.4a8f9ca6.js.map",
+    "787.2a081395.chunk.js.map": "/code-challeng-arvan/static/js/787.2a081395.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6f177d4c.css",
+    "static/js/main.4a8f9ca6.js"
+  ]
+}
