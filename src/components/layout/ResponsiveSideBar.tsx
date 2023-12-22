@@ -24,7 +24,7 @@ function getItem(
 }
 
 const ResponsiveSideBar = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
   const { t } = useTranslation()
 
   const items: MenuItem[] = [

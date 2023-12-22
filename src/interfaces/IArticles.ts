@@ -1,0 +1,28 @@
+export interface IArticleState {
+  articleLists: IArticleList
+}
+
+export interface IArticleList {
+  loading: boolean
+  error: string | null | undefined
+  data: Array<IArticleData>
+  articlesCount: number
+}
+
+export interface IArticleData {
+  slug: string
+  title: string
+  description: string
+  body: string
+  tagList: Array<string>
+  createdAt: string
+  updatedAt: string
+  favorited: boolean
+  favoritesCount: number
+  author: {
+    username: string
+    bio: string
+    image: string
+    following: boolean
+  }
+}
