@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store/ConfigStore'
 import { getArticleData } from '../../store/selectores/ArticleSelector'
 import { IArticleData } from '../../interfaces/IArticles'
-import { fetchArticles } from '../../store/actions/ArticleAction'
+import { deleteArticle, fetchArticles } from '../../store/actions/ArticleAction'
 import moment from 'moment'
 import { MoreOutlined } from '@ant-design/icons'
 import { MenuProps } from 'rc-menu'
-
+import './_article.scss'
 const ArticleLists = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
@@ -64,12 +64,24 @@ const ArticleLists = () => {
       title: 'Action',
       key: 'action',
       render: (_, { slug }) => (
-        <Dropdown menu={{ items }} trigger={['click']}>
+        <Dropdown
+          menu={{
+            items,
+            onClick: ({ key }) => onClickArticle({ key, slug }),
+          }}
+          trigger={['click']}
+        >
           <MoreOutlined />
         </Dropdown>
       ),
     },
   ]
+  const onClickArticle = ({ key, slug }: any) => {
+    debugger
+    if (key === 'delete') {
+      dispatch(deleteArticle(slug))
+    }
+  }
 
   return (
     <Table

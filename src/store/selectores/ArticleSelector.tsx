@@ -6,3 +6,7 @@ export const getArticleData = ({ articles }: RootState) => ({
   articleCount: articles.articleLists.articlesCount,
   data: articles.articleLists.data,
 })
+export const getTagData = ({ articles }: RootState) => ({
+  loading: articles.tagList.loading,
+  data: articles.tagList.data,
+})

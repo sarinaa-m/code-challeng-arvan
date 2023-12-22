@@ -30,7 +30,7 @@ function App() {
           <ConfigProvider
             theme={{
               token: {
-                colorPrimary: '#5bc0de',
+                colorPrimary: ' #1c7cd5',
               },
               components: {
                 Layout: {

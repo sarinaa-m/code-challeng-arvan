@@ -1,6 +1,107 @@
-import React from 'react'
+import './_article.scss'
+import { Checkbox, Col, Flex, Form, Input, Row, Skeleton } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import CustomButton from '../Button/CustomButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTagData } from '../../store/selectores/ArticleSelector'
+import { AppDispatch } from '../../store/ConfigStore'
+import { fetchTagList } from '../../store/actions/ArticleAction'
 const CreateArticles = function () {
-  return <h2> hi </h2>
+  const [form] = Form.useForm()
+  const dispatch = useDispatch<AppDispatch>()
+  const { t } = useTranslation()
+  const { data, loading } = useSelector(getTagData)
+
+  useEffect(() => {
+    dispatch(fetchTagList())
+  }, [])
+
+  const onFinish = (values: any) => {
+    console.log(values)
+  }
+
+  const onRenderTagList = () => {
+    if (loading) {
+      return Array(10)
+        .fill(null)
+        .map((_, index) => (
+          <Flex key={index}>
+            <Skeleton.Button
+              active={true}
+              size={'small'}
+              style={{ marginRight: 12, marginBottom: 12 }}
+            />
+            <Skeleton.Input active={true} size={'small'} block={true} />
+          </Flex>
+        ))
+    } else {
+      return data.map((item) => (
+        <Flex key={item} align="center">
+          <Checkbox>{item}</Checkbox>
+        </Flex>
+      ))
+    }
+  }
+
+  return (
+    <Form
+      form={form}
+      layout="vertical"
+      name="create-article"
+      onFinish={onFinish}
+      className="create-article-form"
+    >
+      <Row gutter={[16, 0]}>
+        <Col xs={24} sm={24} md={18}>
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                name={'title'}
+                label={t('pages.article.title')}
+                rules={[{ required: true, message: t('error.enterTitle') }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name={'description'}
+                label={t('pages.article.description')}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item name={'body'} label={t('pages.article.body')}>
+                <TextArea
+                  maxLength={100}
+                  style={{ height: 200, resize: 'none' }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={24} sm={24} md={6}>
+          <Form.Item name={'tags'} label={t('pages.article.tags')}>
+            <Input />
+          </Form.Item>
+          {onRenderTagList()}
+        </Col>
+        <Col xs={24} sm={24} md={6}>
+          <Form.Item>
+            <CustomButton
+              block={false}
+              name="submit"
+              type="primary"
+              onSubmit={form.submit}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
+  )
 }
 
 export default CreateArticles

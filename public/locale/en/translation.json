@@ -8,7 +8,8 @@
   },
   "error": {
     "enterPassword": "Please input your Password!",
-    "enterEmail": "Please input your Email!"
+    "enterEmail": "Please input your Email!",
+    "enterTitle": "Please Enter Title!"
   },
   "components": {
     "layout": {
@@ -26,6 +27,18 @@
       "haveAccount": "Already Registered?",
       "registerAccount": "Register Now",
       "user": "User"
+    },
+    "article": {
+      "title": "Title",
+      "description": "Description",
+      "body": "Body",
+      "submit": "Submit",
+      "author": "Author",
+      "tags": "Tags",
+      "excerpt": "Excerpt",
+      "created": "Created",
+      "delete": "Delete",
+      "edit": "Edit"
     }
   }
 }

@@ -1,7 +1,13 @@
 export interface IArticleState {
   articleLists: IArticleList
+  tagList: ITagList
 }
 
+export interface ITagList {
+  loading: boolean
+  error: null | string | undefined
+  data: Array<string>
+}
 export interface IArticleList {
   loading: boolean
   error: string | null | undefined
