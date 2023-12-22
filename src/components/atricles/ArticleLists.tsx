@@ -86,5 +86,5 @@ export default function ArticleLists() {
       tags: ['cool', 'teacher'],
     },
   ]
-  return <Table columns={columns} dataSource={data} />
+  return <Table scroll={{ x: 500 }} columns={columns} dataSource={data} />
 }
