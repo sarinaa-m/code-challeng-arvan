@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ARTICLE_STATE_NAME } from '../model/state'
 import { IArticleState } from '../../interfaces/IArticles'
-import { fetchArticles, fetchTagList } from '../actions/ArticleAction'
+import {
+  addArticle,
+  fetchArticles,
+  fetchTagList,
+} from '../actions/ArticleAction'
 
 const initialState: IArticleState = {
   articleLists: {
@@ -15,12 +19,20 @@ const initialState: IArticleState = {
     data: [],
     error: null,
   },
+  addArticle: {
+    loading: false,
+    error: null,
+  },
 }
 
 export const ArticleSlice = createSlice({
   name: ARTICLE_STATE_NAME,
   initialState,
-  reducers: {},
+  reducers: {
+    setTagList: (state, action) => {
+      state.tagList.data = [...state.tagList.data, action.payload]
+    },
+  },
   extraReducers: (builder) => {
     builder
       /********** FETCH ARTICLES **********/
@@ -52,6 +64,21 @@ export const ArticleSlice = createSlice({
         state.tagList.loading = false
         state.tagList.error = action.error.message
       })
+      /********** ADD ARTICLES **********/
+      .addCase(addArticle.pending, (state) => {
+        state.addArticle.loading = true
+        state.addArticle.error = null
+      })
+      .addCase(addArticle.fulfilled, (state, action) => {
+        state.addArticle.loading = false
+        state.addArticle.error = null
+      })
+      .addCase(addArticle.rejected, (state, action) => {
+        state.addArticle.loading = false
+        state.addArticle.error = action.error.message
+      })
   },
 })
+export const { setTagList } = ArticleSlice.actions
+
 export default ArticleSlice.reducer

@@ -87,6 +87,7 @@ export const AuthForm: React.FC<IAuthFormProp> = ({
           name={isRegister ? 'Register' : 'Login'}
           type="primary"
           onSubmit={form.submit}
+          loading={false}
         />
       </Form.Item>
     </Form>

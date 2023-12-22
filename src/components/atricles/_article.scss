@@ -1,3 +1,12 @@
+@import '../../assets/scss/variables/index.scss';
 .create-article-form {
-  padding: 24px !important;
+  padding: 24px;
+  .tag-wrapper {
+    border: 1px solid $border-color;
+    padding: 15px 187.5px 16px 17px;
+    border-radius: 4px;
+    .tag-item {
+      margin-bottom: 14px;
+    }
+  }
 }

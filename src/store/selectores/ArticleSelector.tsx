@@ -10,3 +10,7 @@ export const getTagData = ({ articles }: RootState) => ({
   loading: articles.tagList.loading,
   data: articles.tagList.data,
 })
+
+export const addArticleData = ({ articles }: RootState) => ({
+  loading: articles.addArticle.loading,
+})

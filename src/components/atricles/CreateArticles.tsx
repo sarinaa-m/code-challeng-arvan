@@ -1,25 +1,42 @@
 import './_article.scss'
 import { Checkbox, Col, Flex, Form, Input, Row, Skeleton } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import CustomButton from '../Button/CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTagData } from '../../store/selectores/ArticleSelector'
+import {
+  addArticleData,
+  getTagData,
+} from '../../store/selectores/ArticleSelector'
 import { AppDispatch } from '../../store/ConfigStore'
-import { fetchTagList } from '../../store/actions/ArticleAction'
+import { addArticle, fetchTagList } from '../../store/actions/ArticleAction'
+import { setTagList } from '../../store/reducers/ArticleSlice'
 const CreateArticles = function () {
   const [form] = Form.useForm()
   const dispatch = useDispatch<AppDispatch>()
   const { t } = useTranslation()
   const { data, loading } = useSelector(getTagData)
+  const { loading: ArticleLoading } = useSelector(addArticleData)
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   useEffect(() => {
     dispatch(fetchTagList())
   }, [])
 
-  const onFinish = (values: any) => {
-    console.log(values)
+  const onFinish = async (values: any) => {
+    const formValues = {
+      ...values,
+      tags: selectedTags,
+    }
+
+    const result = await dispatch(addArticle(formValues))
+
+    if (result.type === 'articles/addArticle/fulfilled') {
+      form.resetFields()
+      setSelectedTags([])
+    }
   }
 
   const onRenderTagList = () => {
@@ -37,11 +54,45 @@ const CreateArticles = function () {
           </Flex>
         ))
     } else {
-      return data.map((item) => (
-        <Flex key={item} align="center">
-          <Checkbox>{item}</Checkbox>
-        </Flex>
-      ))
+      return (
+        <div>
+          <Form.Item name={'tags'} className="tag-wrapper">
+            {data.map((item) => (
+              <Flex key={item} align="center" className="tag-item">
+                <Checkbox
+                  onChange={() => onTagChange(item)}
+                  checked={selectedTags.includes(item)}
+                >
+                  {item}
+                </Checkbox>
+              </Flex>
+            ))}
+          </Form.Item>
+        </div>
+      )
+    }
+  }
+
+  const onTagChange = (tag: string) => {
+    const newSelectedTags = [...selectedTags]
+    if (newSelectedTags.includes(tag)) {
+      newSelectedTags.splice(newSelectedTags.indexOf(tag), 1)
+    } else {
+      newSelectedTags.push(tag)
+    }
+    setSelectedTags(newSelectedTags)
+  }
+
+  const [inputValue, setInputValue] = useState('')
+
+  const handleInputChange = (e: any) => {
+    setInputValue(e.target.value)
+  }
+
+  const handleEnterPress = () => {
+    if (inputValue.trim() !== '') {
+      dispatch(setTagList(inputValue))
+      setInputValue('')
     }
   }
 
@@ -54,7 +105,7 @@ const CreateArticles = function () {
       className="create-article-form"
     >
       <Row gutter={[16, 0]}>
-        <Col xs={24} sm={24} md={18}>
+        <Col xs={24} sm={24} md={24} lg={18}>
           <Row>
             <Col span={24}>
               <Form.Item
@@ -84,18 +135,23 @@ const CreateArticles = function () {
           </Row>
         </Col>
         <Col xs={24} sm={24} md={6}>
-          <Form.Item name={'tags'} label={t('pages.article.tags')}>
-            <Input />
+          <Form.Item label={t('pages.article.tags')}>
+            <Input
+              onChange={handleInputChange}
+              onPressEnter={handleEnterPress}
+              value={inputValue}
+            />
           </Form.Item>
           {onRenderTagList()}
         </Col>
-        <Col xs={24} sm={24} md={6}>
+        <Col xs={24} sm={24} md={24} lg={6}>
           <Form.Item>
             <CustomButton
               block={false}
               name="submit"
               type="primary"
               onSubmit={form.submit}
+              loading={ArticleLoading}
             />
           </Form.Item>
         </Col>
