@@ -42,12 +42,14 @@ const CreateArticles = function () {
 
   const onFinish = async (values: any) => {
     const formValues = {
-      ...values,
-      tags: selectedTags,
+      article: {
+        ...values,
+        tags: selectedTags,
+      },
     }
     if (values.slug) {
       const result = await dispatch(updateArticle(formValues))
-      if (result.type === 'articles/update/fulfilled') {
+      if (result.type === 'articles/updateArticle/fulfilled') {
         navigate('/articles')
         form.resetFields()
         setSelectedTags([])
@@ -139,6 +141,9 @@ const CreateArticles = function () {
                 label={t('pages.article.title')}
                 rules={[{ required: true, message: t('error.enterTitle') }]}
               >
+                <Input />
+              </Form.Item>
+              <Form.Item name={'slug'} hidden>
                 <Input />
               </Form.Item>
             </Col>

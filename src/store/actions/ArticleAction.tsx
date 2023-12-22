@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { DataProvider } from '../../api/DataProvider'
 import { message } from 'antd'
+import { resetAddArticle } from '../reducers/ArticleSlice'
 
 export const fetchArticles = createAsyncThunk(
   'articles/fetchArticles',
@@ -41,7 +42,10 @@ export const addArticle = createAsyncThunk(
   'articles/addArticle',
   async (payload: any, thunkAPI: any) => {
     try {
-      const result = await DataProvider.post(`articles`, { article: payload })
+      const values = { ...payload }
+      const result = await DataProvider.post(`articles`, values)
+      message.success(`Article added Successfully`)
+      thunkAPI.dispatch(resetAddArticle())
       return result
     } catch (error: any) {
       message.error(
@@ -90,9 +94,15 @@ export const fetchTagList = createAsyncThunk(
 
 export const updateArticle = createAsyncThunk(
   'articles/updateArticle',
-  async (slug: string, thunkAPI: any) => {
+  async (payload: any, thunkAPI: any) => {
     try {
-      const result = await DataProvider.update(`articles`, { id: slug })
+      const { slug } = payload.article
+      const values = { ...payload }
+      debugger
+      const result = await DataProvider.update(`articles/${slug}`, values)
+      thunkAPI.dispatch(resetAddArticle())
+      message.success(`Article updated Successfully`)
+
       return result
     } catch (error: any) {
       message.error(

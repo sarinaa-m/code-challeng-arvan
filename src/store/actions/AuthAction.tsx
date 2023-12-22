@@ -15,6 +15,7 @@ export const registerUser = createAsyncThunk(
       const result = await DataProvider.post('users', {
         user: { ...payload },
       })
+      message.success(`User added Successfully`)
       localStorage.setItem('token', result.user.token)
       return result
     } catch (error: any) {

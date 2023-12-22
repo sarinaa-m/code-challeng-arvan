@@ -106,7 +106,7 @@ const ArticleLists = () => {
           return {
             onClick: (event) => {
               dispatch(fetchArticleById(record.slug))
-              navigate('create')
+              navigate(`edit/${record.slug}`, { state: { id: record.slug } })
             },
           }
         }}

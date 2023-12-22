@@ -53,6 +53,27 @@ export const ArticleSlice = createSlice({
     setTagList: (state, action) => {
       state.tagList.data = [...state.tagList.data, action.payload]
     },
+    resetAddArticle: (state) => {
+      state.addArticle.data = {
+        article: {
+          slug: '',
+          title: '',
+          description: '',
+          body: '',
+          tagList: [],
+          createdAt: '',
+          updatedAt: '',
+          favorited: null,
+          favoritesCount: 0,
+          author: {
+            username: '',
+            bio: '',
+            image: '',
+            following: null,
+          },
+        },
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -114,6 +135,6 @@ export const ArticleSlice = createSlice({
       })
   },
 })
-export const { setTagList } = ArticleSlice.actions
+export const { setTagList, resetAddArticle } = ArticleSlice.actions
 
 export default ArticleSlice.reducer

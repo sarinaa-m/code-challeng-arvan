@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Form, Input } from 'antd'
+import { Form, Input, notification } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -17,6 +17,12 @@ export const AuthForm: React.FC<IAuthFormProp> = ({
   const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/articles')
+    }
+  }, [])
 
   useEffect(() => {
     form.resetFields()
