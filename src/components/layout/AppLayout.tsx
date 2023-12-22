@@ -1,11 +1,9 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Outlet } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import SideBar from './SideBar'
 import HeaderWrapper from './HeaderWrapper'
 import useMediaQuery from 'use-media-antd-query'
-import ResponsiveSideBar from './ResponsiveSideBar'
 const { Content } = Layout
 
 const AppLayout = () => {

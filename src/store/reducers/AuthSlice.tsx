@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { AUTH_STATE_NAME } from '../model/state'
 import { IAuth } from '../../interfaces/ILogin'
-import { registerUser } from '../actions/AuthAction'
+import { fetchCurrentUser, registerUser } from '../actions/AuthAction'
 
 const initialState: IAuth = {
   modifyUser: {
@@ -14,6 +14,19 @@ const initialState: IAuth = {
         bio: null,
         image: '',
         token: '',
+      },
+    },
+  },
+  userData: {
+    loading: false,
+    error: null,
+    userDetail: {
+      user: {
+        email: '',
+        token: '',
+        username: '',
+        bio: '',
+        image: '',
       },
     },
   },
@@ -37,6 +50,20 @@ export const AuthSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.modifyUser.loading = false
         state.modifyUser.error = action.error.message
+      })
+      /******************* FETCH CURRENT USER **********************/
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.userData.loading = true
+        state.userData.error = null
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.userData.loading = false
+        state.userData.error = null
+        state.userData.userDetail = action.payload
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.userData.loading = false
+        state.userData.error = action.error.message
       })
   },
 })
