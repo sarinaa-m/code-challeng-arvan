@@ -23,8 +23,8 @@ export const deleteArticle = createAsyncThunk(
   'articles/deleteArticle',
   async (payload: string, thunkAPI: any) => {
     try {
-      debugger
       const result = await DataProvider.delete(`articles`, { id: payload })
+      thunkAPI.dispatch(fetchArticles())
       return result
     } catch (error: any) {
       message.error(
@@ -36,11 +36,11 @@ export const deleteArticle = createAsyncThunk(
     }
   }
 )
+
 export const addArticle = createAsyncThunk(
   'articles/addArticle',
   async (payload: any, thunkAPI: any) => {
     try {
-      debugger
       const result = await DataProvider.post(`articles`, { article: payload })
       return result
     } catch (error: any) {
@@ -53,11 +53,11 @@ export const addArticle = createAsyncThunk(
     }
   }
 )
+
 export const fetchTagList = createAsyncThunk(
   'articles/fetchTagList',
   async (_, thunkAPI: any) => {
     try {
-      debugger
       const result = await DataProvider.getList(`tags`)
       return result
     } catch (error: any) {
