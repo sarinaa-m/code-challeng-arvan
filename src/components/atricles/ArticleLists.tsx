@@ -6,14 +6,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store/ConfigStore'
 import { getArticleData } from '../../store/selectores/ArticleSelector'
 import { IArticleData } from '../../interfaces/IArticles'
-import { deleteArticle, fetchArticles } from '../../store/actions/ArticleAction'
+import {
+  deleteArticle,
+  fetchArticleById,
+  fetchArticles,
+} from '../../store/actions/ArticleAction'
 import moment from 'moment'
 import { MoreOutlined } from '@ant-design/icons'
 import { MenuProps } from 'rc-menu'
 import './_article.scss'
+import { useNavigate } from 'react-router-dom'
 const ArticleLists = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
   const { articleCount, data, loading } = useSelector(getArticleData)
 
   useEffect(() => {
@@ -96,6 +102,14 @@ const ArticleLists = () => {
         scroll={{ x: 500 }}
         columns={columns}
         dataSource={data}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              dispatch(fetchArticleById(record.slug))
+              navigate('create')
+            },
+          }
+        }}
       />
     </div>
   )

@@ -14,3 +14,8 @@ export const getTagData = ({ articles }: RootState) => ({
 export const addArticleData = ({ articles }: RootState) => ({
   loading: articles.addArticle.loading,
 })
+
+export const getArticleById = ({ articles }: RootState) => ({
+  loading: articles.addArticle.loading,
+  item: articles.addArticle.data?.article,
+})

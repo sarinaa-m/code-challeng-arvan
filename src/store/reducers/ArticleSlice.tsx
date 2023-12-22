@@ -3,9 +3,11 @@ import { ARTICLE_STATE_NAME } from '../model/state'
 import { IArticleState } from '../../interfaces/IArticles'
 import {
   addArticle,
+  fetchArticleById,
   fetchArticles,
   fetchTagList,
 } from '../actions/ArticleAction'
+import { number } from 'yargs'
 
 const initialState: IArticleState = {
   articleLists: {
@@ -22,6 +24,25 @@ const initialState: IArticleState = {
   addArticle: {
     loading: false,
     error: null,
+    data: {
+      article: {
+        slug: '',
+        title: '',
+        description: '',
+        body: '',
+        tagList: [],
+        createdAt: '',
+        updatedAt: '',
+        favorited: null,
+        favoritesCount: 0,
+        author: {
+          username: '',
+          bio: '',
+          image: '',
+          following: null,
+        },
+      },
+    },
   },
 }
 
@@ -74,6 +95,20 @@ export const ArticleSlice = createSlice({
         state.addArticle.error = null
       })
       .addCase(addArticle.rejected, (state, action) => {
+        state.addArticle.loading = false
+        state.addArticle.error = action.error.message
+      })
+      /********** FETCH ARTICLE BY ID **********/
+      .addCase(fetchArticleById.pending, (state) => {
+        state.addArticle.loading = true
+        state.addArticle.error = null
+      })
+      .addCase(fetchArticleById.fulfilled, (state, action) => {
+        state.addArticle.loading = false
+        state.addArticle.data = action.payload
+        state.addArticle.error = null
+      })
+      .addCase(fetchArticleById.rejected, (state, action) => {
         state.addArticle.loading = false
         state.addArticle.error = action.error.message
       })

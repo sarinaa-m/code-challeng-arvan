@@ -1,5 +1,5 @@
 import './_article.scss'
-import { Checkbox, Col, Flex, Form, Input, Row, Skeleton } from 'antd'
+import { Checkbox, Col, Flex, Form, Input, Row, Skeleton, Spin } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,10 +7,15 @@ import CustomButton from '../Button/CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   addArticleData,
+  getArticleById,
   getTagData,
 } from '../../store/selectores/ArticleSelector'
 import { AppDispatch } from '../../store/ConfigStore'
-import { addArticle, fetchTagList } from '../../store/actions/ArticleAction'
+import {
+  addArticle,
+  fetchTagList,
+  updateArticle,
+} from '../../store/actions/ArticleAction'
 import { setTagList } from '../../store/reducers/ArticleSlice'
 import { redirect, useNavigate } from 'react-router'
 const CreateArticles = function () {
@@ -20,7 +25,8 @@ const CreateArticles = function () {
   const { t } = useTranslation()
 
   const { data, loading } = useSelector(getTagData)
-  const { loading: ArticleLoading } = useSelector(addArticleData)
+  const { loading: articleLoading } = useSelector(addArticleData)
+  const { item } = useSelector(getArticleById)
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
@@ -28,18 +34,32 @@ const CreateArticles = function () {
     dispatch(fetchTagList())
   }, [])
 
+  useEffect(() => {
+    if (item?.slug) {
+      form.setFieldsValue(item)
+    }
+  }, [item])
+
   const onFinish = async (values: any) => {
     const formValues = {
       ...values,
       tags: selectedTags,
     }
+    if (values.slug) {
+      const result = await dispatch(updateArticle(formValues))
+      if (result.type === 'articles/update/fulfilled') {
+        navigate('/articles')
+        form.resetFields()
+        setSelectedTags([])
+      }
+    } else {
+      const result = await dispatch(addArticle(formValues))
 
-    const result = await dispatch(addArticle(formValues))
-
-    if (result.type === 'articles/addArticle/fulfilled') {
-      form.resetFields()
-      setSelectedTags([])
-      navigate('/articles')
+      if (result.type === 'articles/addArticle/fulfilled') {
+        navigate('/articles')
+        form.resetFields()
+        setSelectedTags([])
+      }
     }
   }
 
@@ -100,7 +120,9 @@ const CreateArticles = function () {
     }
   }
 
-  return (
+  return articleLoading ? (
+    <Spin className="loading" size="large" />
+  ) : (
     <Form
       form={form}
       layout="vertical"
@@ -155,7 +177,7 @@ const CreateArticles = function () {
               name="submit"
               type="primary"
               onSubmit={form.submit}
-              loading={ArticleLoading}
+              loading={articleLoading}
             />
           </Form.Item>
         </Col>

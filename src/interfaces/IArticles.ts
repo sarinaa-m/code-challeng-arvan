@@ -7,6 +7,7 @@ export interface IArticleState {
 interface IAddArticle {
   loading: boolean
   error: null | undefined | string
+  data?: { article: IArticleData }
 }
 export interface ITagList {
   loading: boolean
@@ -28,12 +29,12 @@ export interface IArticleData {
   tagList: Array<string>
   createdAt: string
   updatedAt: string
-  favorited: boolean
+  favorited: boolean | null
   favoritesCount: number
   author: {
     username: string
     bio: string
     image: string
-    following: boolean
+    following: boolean | null
   }
 }
