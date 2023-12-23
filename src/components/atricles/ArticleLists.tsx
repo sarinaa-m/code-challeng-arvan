@@ -1,6 +1,6 @@
 import { Button, Dropdown, Space, Table, Tag } from 'antd'
 import { ColumnsType } from 'antd/es/table'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store/ConfigStore'
@@ -21,7 +21,11 @@ const ArticleLists = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { articleCount, data, loading } = useSelector(getArticleData)
-
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 2,
+    total: data.length,
+  })
   useEffect(() => {
     dispatch(fetchArticles())
   }, [])
@@ -36,7 +40,13 @@ const ArticleLists = () => {
       key: 'delete',
     },
   ]
-
+  const handleTableChange = (pagination: any) => {
+    navigate(`/articles/page/${pagination.current}`)
+    setPagination((old) => ({ ...old, current: pagination.current }))
+    if (pagination.current === 1) {
+      navigate(`/articles`)
+    }
+  }
   const columns: ColumnsType<IArticleData> = [
     {
       title: '#',
@@ -102,6 +112,8 @@ const ArticleLists = () => {
         scroll={{ x: 500 }}
         columns={columns}
         dataSource={data}
+        onChange={handleTableChange}
+        pagination={pagination}
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

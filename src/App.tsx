@@ -58,6 +58,10 @@ function App() {
             element: <ArticleLists />,
           },
           {
+            path: 'page/:page',
+            element: <ArticleLists />,
+          },
+          {
             path: 'create',
             element: <CreateArticles />,
           },
