@@ -27,4 +27,21 @@ export interface IAuth {
       }
     }
   }
+  userData: IUserData
+}
+
+interface IUserData {
+  loading: boolean
+  error: null | string | undefined
+  userDetail: IUserDetail
+}
+
+interface IUserDetail {
+  user: {
+    email: string
+    token: string
+    username: string
+    bio: string
+    image: string
+  }
 }

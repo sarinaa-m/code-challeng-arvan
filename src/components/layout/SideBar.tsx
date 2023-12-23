@@ -4,8 +4,8 @@ import {
   MailOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 const { Sider } = Layout
@@ -29,14 +29,33 @@ function getItem(
 
 const SideBar = function () {
   const { t } = useTranslation()
+  const location = useLocation()
+  const [activeMenu, setActiveMenu] = useState<string[]>(['article'])
   const items: MenuItem[] = [
-    getItem(<Link to="/articles">{t('menu.allArticles')}</Link>, 'all'),
-
-    getItem(<Link to="/articles/create">{t('menu.newArticles')}</Link>, 'new'),
+    getItem(<Link to="/articles">{t('menu.allArticles')}</Link>, 'article'),
+    getItem(
+      <Link to="/articles/create">{t('menu.newArticles')}</Link>,
+      'create'
+    ),
   ]
+  console.log(location, 'location')
+  useEffect(() => {
+    if (location.pathname.includes('article')) {
+      setActiveMenu(['article'])
+    }
+    if (location.pathname.includes('create')) {
+      setActiveMenu(['create'])
+    }
+  }, [location])
+
   return (
     <Sider>
-      <Menu theme="dark" mode="vertical" items={items} />
+      <Menu
+        theme="dark"
+        mode="vertical"
+        items={items}
+        selectedKeys={activeMenu}
+      />
     </Sider>
   )
 }

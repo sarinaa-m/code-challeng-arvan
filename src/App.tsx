@@ -1,6 +1,10 @@
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
-import React from 'react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { AuthForm } from './components/authForm/AuthForm'
 import AppLayout from './components/layout/AppLayout'
@@ -30,7 +34,7 @@ function App() {
           <ConfigProvider
             theme={{
               token: {
-                colorPrimary: '#5bc0de',
+                colorPrimary: ' #1c7cd5',
               },
               components: {
                 Layout: {
@@ -54,7 +58,15 @@ function App() {
             element: <ArticleLists />,
           },
           {
+            path: 'page/:page',
+            element: <ArticleLists />,
+          },
+          {
             path: 'create',
+            element: <CreateArticles />,
+          },
+          {
+            path: 'edit/:id',
             element: <CreateArticles />,
           },
         ],

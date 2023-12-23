@@ -5,4 +5,5 @@ export interface ICostumeBtn {
   block: boolean
   type: ButtonType
   onSubmit: () => void
+  loading: boolean
 }

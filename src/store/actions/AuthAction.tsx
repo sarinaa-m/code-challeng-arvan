@@ -15,6 +15,7 @@ export const registerUser = createAsyncThunk(
       const result = await DataProvider.post('users', {
         user: { ...payload },
       })
+      message.success(`User added Successfully`)
       localStorage.setItem('token', result.user.token)
       return result
     } catch (error: any) {
@@ -42,6 +43,24 @@ export const loginUser = createAsyncThunk(
         user: { ...payload },
       })
       localStorage.setItem('token', result.user.token)
+      thunkAPI.dispatch(fetchCurrentUser())
+      return result
+    } catch (error: any) {
+      message.error(
+        `${error?.response?.data?.errors || error?.message || 'Error'}`
+      )
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.errors || error?.message || 'Error'
+      )
+    }
+  }
+)
+
+export const fetchCurrentUser = createAsyncThunk(
+  'auth/loginUser',
+  async (_, thunkAPI: any) => {
+    try {
+      const result = await DataProvider.getList('user')
       return result
     } catch (error: any) {
       message.error(

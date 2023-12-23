@@ -1,10 +1,9 @@
-import { Button, Col, Menu, Row } from 'antd'
-import Drawer from 'rc-drawer'
+import { Button, Col, Drawer, Menu, Row } from 'antd'
 import { MenuProps } from 'rc-menu'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
+import { MenuOutlined } from '@ant-design/icons'
 type MenuItem = Required<MenuProps>['items'][number]
 
 function getItem(
@@ -24,7 +23,7 @@ function getItem(
 }
 
 const ResponsiveSideBar = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
   const { t } = useTranslation()
 
   const items: MenuItem[] = [
@@ -32,7 +31,7 @@ const ResponsiveSideBar = () => {
     getItem(<Link to="/articles/create">{t('menu.newArticles')}</Link>, 'new'),
   ]
   const showDrawer = () => {
-    setOpen(true)
+    setOpen(!open)
   }
 
   const onClose = () => {
@@ -45,10 +44,24 @@ const ResponsiveSideBar = () => {
         className="hamburger-menu-button"
         type="text"
         onClick={showDrawer}
+        icon={<MenuOutlined color="#fff" />}
+      />
+      <Drawer
+        placement={'left'}
+        onClose={onClose}
+        open={open}
+        title={t('menu.menu')}
+        closable={false}
+        key={'left'}
+        contentWrapperStyle={{
+          width: 'min(20rem, 100vw)',
+        }}
+        styles={{
+          body: {
+            padding: 0,
+          },
+        }}
       >
-        open
-      </Button>
-      <Drawer placement={'left'} onClose={onClose} open={open}>
         <Row>
           <Col span={24}>
             <Menu

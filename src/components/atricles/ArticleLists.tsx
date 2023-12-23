@@ -1,90 +1,130 @@
-import { Space, Table, Tag } from 'antd'
+import { Button, Dropdown, Space, Table, Tag } from 'antd'
 import { ColumnsType } from 'antd/es/table'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../store/ConfigStore'
+import { getArticleData } from '../../store/selectores/ArticleSelector'
+import { IArticleData } from '../../interfaces/IArticles'
+import {
+  deleteArticle,
+  fetchArticleById,
+  fetchArticles,
+} from '../../store/actions/ArticleAction'
+import moment from 'moment'
+import { MoreOutlined } from '@ant-design/icons'
+import { MenuProps } from 'rc-menu'
+import './_article.scss'
+import { useNavigate } from 'react-router-dom'
+const ArticleLists = () => {
+  const { t } = useTranslation()
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  const { articleCount, data, loading } = useSelector(getArticleData)
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 2,
+    total: data.length,
+  })
+  useEffect(() => {
+    dispatch(fetchArticles())
+  }, [])
 
-interface DataType {
-  key: string
-  name: string
-  age: number
-  address: string
-  tags: string[]
-}
-
-export default function ArticleLists() {
-  const columns: ColumnsType<DataType> = [
+  const items: MenuProps['items'] = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <div>{text}</div>,
+      label: 'Edit',
+      key: 'edit',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      label: 'Delete',
+      key: 'delete',
+    },
+  ]
+  const handleTableChange = (pagination: any) => {
+    navigate(`/articles/page/${pagination.current}`)
+    setPagination((old) => ({ ...old, current: pagination.current }))
+    if (pagination.current === 1) {
+      navigate(`/articles`)
+    }
+  }
+  const columns: ColumnsType<IArticleData> = [
+    {
+      title: '#',
+      dataIndex: 'key',
+      rowScope: 'row',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green'
-            if (tag === 'loser') {
-              color = 'volcano'
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            )
-          })}
-        </>
-      ),
+      title: 'Author',
+      dataIndex: 'author',
+      key: 'author',
+      render: (_, { author }) => <div>{author.username}</div>,
+    },
+    {
+      title: 'Tag',
+      dataIndex: 'tagList',
+      key: 'tagList',
+      render: (_, { tagList }) => tagList.toString(),
+    },
+    {
+      title: 'Excerpt',
+      key: 'body',
+      dataIndex: 'body',
+      render: (_, { body }) => <div>{body.substring(0, 20)}</div>,
+    },
+    {
+      title: 'Created',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (_, { createdAt }) => moment(createdAt).format('MMMM Do YYYY'),
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <div>
-            Invite
-            {record.name}
-          </div>
-          <div>Delete</div>
-        </Space>
+      render: (_, { slug }) => (
+        <Dropdown
+          menu={{
+            items,
+            onClick: ({ key }) => onClickArticle({ key, slug }),
+          }}
+          trigger={['click']}
+        >
+          <MoreOutlined />
+        </Dropdown>
       ),
     },
   ]
+  const onClickArticle = ({ key, slug }: any) => {
+    if (key === 'delete') {
+      dispatch(deleteArticle(slug))
+    }
+  }
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ]
-  return <Table scroll={{ x: 500 }} columns={columns} dataSource={data} />
+  return (
+    <div className="article-wrapper">
+      <p className="header">{t('pages.article.articlePageTitle')}</p>
+      <Table
+        loading={loading}
+        scroll={{ x: 500 }}
+        columns={columns}
+        dataSource={data}
+        onChange={handleTableChange}
+        pagination={pagination}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              dispatch(fetchArticleById(record.slug))
+              navigate(`edit/${record.slug}`, { state: { id: record.slug } })
+            },
+          }
+        }}
+      />
+    </div>
+  )
 }
+
+export default ArticleLists
