@@ -11,7 +11,7 @@ i18n
   .init({
     debug: false,
     backend: {
-      loadPath: '/locale/{{lng}}/{{ns}}.json',
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
 
     fallbackLng: 'en',
@@ -19,7 +19,7 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
 
-    load: 'all',
+    load: 'currentOnly',
     react: {
       useSuspense: false,
     },
