@@ -8,10 +8,11 @@ const CustomButton: React.FC<ICostumeBtn> = ({
   name,
   onSubmit,
   type,
+  loading,
 }) => {
   const { t } = useTranslation()
   const onClickBtn = () => {
-    onSubmit('ss')
+    onSubmit()
   }
   return (
     <Button
@@ -20,6 +21,7 @@ const CustomButton: React.FC<ICostumeBtn> = ({
       }}
       block={block}
       type={type}
+      loading={loading}
     >
       {t('action.btn', { name: name })}
     </Button>

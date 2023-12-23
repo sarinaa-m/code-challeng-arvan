@@ -59,7 +59,7 @@ api.interceptors.request.use(
   async (config: any) => {
     const tokenKey: any = localStorage.getItem('token')
     if (tokenKey) {
-      config.headers.Authorization = `Bearer ${tokenKey}`
+      config.headers.Authorization = `Token ${tokenKey}`
     }
     return config
   },

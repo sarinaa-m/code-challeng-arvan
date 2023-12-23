@@ -1,24 +1,18 @@
 import React from 'react'
-import { Button, Layout } from 'antd'
+import { Layout } from 'antd'
 import { Outlet } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import SideBar from './SideBar'
-
-const { Content, Header } = Layout
+import HeaderWrapper from './HeaderWrapper'
+import useMediaQuery from 'use-media-antd-query'
+const { Content } = Layout
 
 const AppLayout = () => {
-  const { t } = useTranslation()
-
+  const windowSize = useMediaQuery()
   return (
     <Layout className="app-layout-wrapper">
-      <Header className="app-header">
-        {t('components.layout.headerTitle')}
-        <Button type="primary" ghost>
-          {t('components.layout.logout')}
-        </Button>
-      </Header>
+      <HeaderWrapper />
       <Layout>
-        <SideBar />
+        {windowSize !== 'xs' && windowSize !== 'sm' && <SideBar />}
         <Content>
           <Outlet />
         </Content>
