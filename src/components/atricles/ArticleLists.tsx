@@ -101,6 +101,9 @@ const ArticleLists = () => {
   const onClickArticle = ({ key, slug }: any) => {
     if (key === 'delete') {
       dispatch(deleteArticle(slug))
+    } else if (key === 'edit') {
+      dispatch(fetchArticleById(slug))
+      navigate(`edit/${slug}`, { state: { id: slug } })
     }
   }
 
@@ -114,14 +117,6 @@ const ArticleLists = () => {
         dataSource={data}
         onChange={handleTableChange}
         pagination={pagination}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              dispatch(fetchArticleById(record.slug))
-              navigate(`edit/${record.slug}`, { state: { id: record.slug } })
-            },
-          }
-        }}
       />
     </div>
   )
