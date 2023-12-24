@@ -75,6 +75,7 @@ const CreateArticles = function () {
   }
 
   const onRenderTagList = () => {
+    const sortedDataTag: any = []
     if (loading) {
       return Array(10)
         .fill(null)
@@ -92,16 +93,20 @@ const CreateArticles = function () {
       return (
         <div>
           <Form.Item name={'tags'} className="tag-wrapper">
-            {data.map((item) => (
-              <Flex key={item} align="center" className="tag-item">
-                <Checkbox
-                  onChange={() => onTagChange(item)}
-                  checked={selectedTags.includes(item)}
-                >
-                  {item}
-                </Checkbox>
-              </Flex>
-            ))}
+            {Array.isArray(sortedDataTag) && sortedDataTag.length > 0 ? (
+              sortedDataTag?.sort().map((item) => (
+                <Flex key={item} align="center" className="tag-item">
+                  <Checkbox
+                    onChange={() => onTagChange(item)}
+                    checked={selectedTags.includes(item)}
+                  >
+                    {item}
+                  </Checkbox>
+                </Flex>
+              ))
+            ) : (
+              <p>No Data</p>
+            )}
           </Form.Item>
         </div>
       )
