@@ -15,12 +15,13 @@ import moment from "moment";
 import { MoreOutlined } from "@ant-design/icons";
 import { MenuProps } from "rc-menu";
 import "./_article.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../shared/DeleteModal";
 const ArticleLists = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { articleData, articleLoading } = useSelector(getArticleData);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -32,6 +33,14 @@ const ArticleLists = () => {
   useEffect(() => {
     dispatch(fetchArticles());
   }, []);
+
+  useEffect(() => {
+    const urlPath = location.pathname.split("/");
+    const pageSize = urlPath[3];
+    if (pageSize) {
+      setPagination((old) => ({ ...old, current: Number(pageSize) }));
+    }
+  }, [location]);
 
   const items: MenuProps["items"] = [
     {
@@ -110,7 +119,7 @@ const ArticleLists = () => {
     } else if (key === "edit") {
       const result = await dispatch(fetchArticleById(slug));
       if (result.type === "articles/fetchArticleById/fulfilled") {
-        navigate(`articles/edit/${slug}`, { state: { id: slug } });
+        navigate(`/articles/edit/${slug}`, { state: { id: slug } });
       }
     }
   };
