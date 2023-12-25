@@ -44,7 +44,7 @@ const SideBar = function () {
   ];
 
   useEffect(() => {
-    dispatch(resetAddArticle());
+    // dispatch(resetAddArticle());
     if (location.pathname.includes("article")) {
       setActiveMenu(["article"]);
     }

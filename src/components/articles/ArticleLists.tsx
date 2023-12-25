@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/ConfigStore";
-import { getArticleData } from "../../store/selectores/ArticleSelector";
+import { getArticleData } from "../../store/selectors/ArticleSelector";
 import { IArticleData } from "../../interfaces/IArticles";
 import {
   deleteArticle,
@@ -20,11 +20,11 @@ const ArticleLists = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { articleCount, data, loading } = useSelector(getArticleData);
+  const { articleData, articleLoading } = useSelector(getArticleData);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 2,
-    total: data.length,
+    total: articleData.length,
   });
   useEffect(() => {
     dispatch(fetchArticles());
@@ -52,6 +52,8 @@ const ArticleLists = () => {
       title: "#",
       dataIndex: "key",
       rowScope: "row",
+      render: (value, item, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Title",
@@ -98,12 +100,14 @@ const ArticleLists = () => {
       ),
     },
   ];
-  const onClickArticle = ({ key, slug }: any) => {
+  const onClickArticle = async ({ key, slug }: any) => {
     if (key === "delete") {
-      dispatch(deleteArticle(slug));
+      await dispatch(deleteArticle(slug));
     } else if (key === "edit") {
-      dispatch(fetchArticleById(slug));
-      navigate(`edit/${slug}`, { state: { id: slug } });
+      const result = await dispatch(fetchArticleById(slug));
+      if (result.type === "articles/fetchArticleById/fulfilled") {
+        navigate(`edit/${slug}`, { state: { id: slug } });
+      }
     }
   };
 
@@ -111,10 +115,10 @@ const ArticleLists = () => {
     <div className="article-wrapper">
       <p className="header">{t("pages.article.articlePageTitle")}</p>
       <Table
-        loading={loading}
+        loading={articleLoading}
         scroll={{ x: 500 }}
         columns={columns}
-        dataSource={data}
+        dataSource={articleData}
         onChange={handleTableChange}
         pagination={pagination}
       />

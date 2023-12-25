@@ -7,7 +7,7 @@ export interface IArticleState {
 interface IAddArticle {
   loading: boolean;
   error: null | undefined | string;
-  data?: { article: IArticleData };
+  data?: IArticleData;
 }
 export interface ITagList {
   loading: boolean;

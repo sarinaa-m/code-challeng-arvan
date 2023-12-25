@@ -7,7 +7,6 @@ import {
   fetchArticles,
   fetchTagList,
 } from "../actions/ArticleAction";
-import { number } from "yargs";
 
 const initialState: IArticleState = {
   articleLists: {
@@ -25,22 +24,20 @@ const initialState: IArticleState = {
     loading: false,
     error: null,
     data: {
-      article: {
-        slug: "",
-        title: "",
-        description: "",
-        body: "",
-        tagList: [],
-        createdAt: "",
-        updatedAt: "",
-        favorited: null,
-        favoritesCount: 0,
-        author: {
-          username: "",
-          bio: "",
-          image: "",
-          following: null,
-        },
+      slug: "",
+      title: "",
+      description: "",
+      body: "",
+      tagList: [],
+      createdAt: "",
+      updatedAt: "",
+      favorited: null,
+      favoritesCount: 0,
+      author: {
+        username: "",
+        bio: "",
+        image: "",
+        following: null,
       },
     },
   },
@@ -56,22 +53,20 @@ export const ArticleSlice = createSlice({
     resetAddArticle: (state) => {
       debugger;
       state.addArticle.data = {
-        article: {
-          slug: "",
-          title: "",
-          description: "",
-          body: "",
-          tagList: [],
-          createdAt: "",
-          updatedAt: "",
-          favorited: null,
-          favoritesCount: 0,
-          author: {
-            username: "",
-            bio: "",
-            image: "",
-            following: null,
-          },
+        slug: "",
+        title: "",
+        description: "",
+        body: "",
+        tagList: [],
+        createdAt: "",
+        updatedAt: "",
+        favorited: null,
+        favoritesCount: 0,
+        author: {
+          username: "",
+          bio: "",
+          image: "",
+          following: null,
         },
       };
     },
@@ -127,7 +122,7 @@ export const ArticleSlice = createSlice({
       })
       .addCase(fetchArticleById.fulfilled, (state, action) => {
         state.addArticle.loading = false;
-        state.addArticle.data = action.payload;
+        state.addArticle.data = action.payload.article;
         state.addArticle.error = null;
       })
       .addCase(fetchArticleById.rejected, (state, action) => {
@@ -137,5 +132,4 @@ export const ArticleSlice = createSlice({
   },
 });
 export const { setTagList, resetAddArticle } = ArticleSlice.actions;
-
 export default ArticleSlice.reducer;
