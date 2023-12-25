@@ -40,6 +40,7 @@ const CreateArticles = function () {
   useEffect(() => {
     if (item?.slug) {
       form.setFieldsValue(item);
+      setSelectedTags(item.tagList || []);
     }
   }, [item]);
 
@@ -53,7 +54,7 @@ const CreateArticles = function () {
     const formValues = {
       article: {
         ...values,
-        tags: selectedTags,
+        tagList: selectedTags,
       },
     };
     if (values.slug) {
@@ -75,6 +76,7 @@ const CreateArticles = function () {
   };
 
   const onRenderTagList = () => {
+    const sortedDataTag: any = [...data];
     if (loading) {
       return Array(10)
         .fill(null)
@@ -90,20 +92,27 @@ const CreateArticles = function () {
         ));
     } else {
       return (
-        <div>
-          <Form.Item name={"tags"} className="tag-wrapper">
-            {data.map((item) => (
+        <Form.Item
+          name={"tagList"}
+          className="tag-wrapper"
+          valuePropName="checked"
+        >
+          {Array.isArray(sortedDataTag) && sortedDataTag.length > 0 ? (
+            sortedDataTag.sort().map((item) => (
               <Flex key={item} align="center" className="tag-item">
                 <Checkbox
-                  onChange={() => onTagChange(item)}
                   checked={selectedTags.includes(item)}
+                  name={item}
+                  onChange={() => onTagChange(item)}
                 >
                   {item}
                 </Checkbox>
               </Flex>
-            ))}
-          </Form.Item>
-        </div>
+            ))
+          ) : (
+            <p>No Data</p>
+          )}
+        </Form.Item>
       );
     }
   };

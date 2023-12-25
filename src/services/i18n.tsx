@@ -3,6 +3,10 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 
+const baseRoute = process.env.REACT_APP_BASE_GITHUB_PAGES_BASE_URL
+  ? process.env.REACT_APP_BASE_GITHUB_PAGES_BASE_URL
+  : process.env.REACT_APP_BASE_SUB_ROUTE;
+
 i18n
   .use(Backend)
   .use(LanguageDetector)
@@ -11,7 +15,7 @@ i18n
   .init({
     debug: false,
     backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
+      loadPath: `${baseRoute ?? ""}/locales/{{lng}}/{{ns}}.json`,
     },
 
     fallbackLng: "en",
