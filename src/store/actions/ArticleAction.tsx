@@ -10,8 +10,12 @@ export const fetchArticles = createAsyncThunk(
       const result = await DataProvider.getList("articles");
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -28,8 +32,12 @@ export const deleteArticle = createAsyncThunk(
       thunkAPI.dispatch(fetchArticles());
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -48,8 +56,12 @@ export const addArticle = createAsyncThunk(
       thunkAPI.dispatch(resetAddArticle());
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -65,8 +77,12 @@ export const fetchArticleById = createAsyncThunk(
       const result = await DataProvider.getOne(`articles`, { id: payload });
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -82,8 +98,12 @@ export const fetchTagList = createAsyncThunk(
       const result = await DataProvider.getList(`tags`);
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -104,8 +124,12 @@ export const updateArticle = createAsyncThunk(
 
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
