@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ResponsiveSideBar from "./ResponsiveSideBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getArticleData } from "../../store/selectors/ArticleSelector";
 import useMediaQuery from "use-media-antd-query";
 import { AppDispatch } from "../../store/ConfigStore";
 import { fetchCurrentUser } from "../../store/actions/AuthAction";

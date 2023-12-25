@@ -26,7 +26,7 @@ const errorHandler = (error: any) => {
 };
 
 api.interceptors.response.use(undefined, async (error: any) => {
-  const status = error?.code;
+  // const status = error?.code;
   // switch (status) {
   // TODO:check on 401
   // case "ERR_NETWORK":

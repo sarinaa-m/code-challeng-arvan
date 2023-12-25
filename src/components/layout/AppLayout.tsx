@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import HeaderWrapper from "./HeaderWrapper";
 import useMediaQuery from "use-media-antd-query";
+import "./_layout.scss";
 const { Content } = Layout;
 
 const AppLayout = () => {

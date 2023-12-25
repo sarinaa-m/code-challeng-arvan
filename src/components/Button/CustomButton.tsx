@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import React, { FC } from "react";
+import React from "react";
 import { ICostumeBtn } from "../../interfaces/IButton";
 import { useTranslation } from "react-i18next";
 

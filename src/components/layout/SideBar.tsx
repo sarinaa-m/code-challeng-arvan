@@ -1,15 +1,7 @@
 import { Menu, MenuProps, Layout } from "antd";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/ConfigStore";
-import { resetAddArticle } from "../../store/reducers/ArticleSlice";
 
 const { Sider } = Layout;
 type MenuItem = Required<MenuProps>["items"][number];
@@ -33,7 +25,6 @@ function getItem(
 const SideBar = function () {
   const { t } = useTranslation();
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
   const [activeMenu, setActiveMenu] = useState<string[]>(["article"]);
   const items: MenuItem[] = [
     getItem(<Link to="/articles">{t("menu.allArticles")}</Link>, "article"),

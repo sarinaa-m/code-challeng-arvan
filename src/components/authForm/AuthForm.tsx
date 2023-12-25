@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, notification } from "antd";
+import { Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,7 @@ import { IAuthFormProp } from "../../interfaces/ILogin";
 import { AppDispatch } from "../../store/ConfigStore";
 import CustomButton from "../Button/CustomButton";
 import { loginUser, registerUser } from "../../store/actions/AuthAction";
-
+import "./_login.scss";
 export const AuthForm: React.FC<IAuthFormProp> = ({
   title,
   additionalFields,

@@ -1,8 +1,7 @@
 import { api } from "./Configs/axiosConfigs";
-import { defineCancelApiObject } from "./Configs/axiosUtils";
 
 export const DataProvider = {
-  async getList(resource: string, params?: any, cancel = false) {
+  async getList(resource: string, params?: any) {
     const response: any = await api.request({
       url: `/${resource}`,
       method: "GET",
@@ -11,7 +10,7 @@ export const DataProvider = {
 
     return response.data;
   },
-  async getOne(resource: string, params?: any, cancel = false) {
+  async getOne(resource: string, params?: any) {
     const { id, ...others } = params;
 
     const response: any = await api.request({

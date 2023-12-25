@@ -107,7 +107,7 @@ export const ArticleSlice = createSlice({
         state.addArticle.loading = true;
         state.addArticle.error = null;
       })
-      .addCase(addArticle.fulfilled, (state, action) => {
+      .addCase(addArticle.fulfilled, (state) => {
         state.addArticle.loading = false;
         state.addArticle.error = null;
       })
