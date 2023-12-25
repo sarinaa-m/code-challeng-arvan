@@ -54,6 +54,7 @@ export const ArticleSlice = createSlice({
       state.tagList.data = [...state.tagList.data, action.payload];
     },
     resetAddArticle: (state) => {
+      debugger;
       state.addArticle.data = {
         article: {
           slug: "",

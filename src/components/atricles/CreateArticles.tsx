@@ -41,6 +41,9 @@ const CreateArticles = function () {
     if (item?.slug) {
       form.setFieldsValue(item);
       setSelectedTags(item.tagList || []);
+    } else {
+      form.resetFields();
+      setSelectedTags([]);
     }
   }, [item]);
 
