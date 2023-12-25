@@ -7,6 +7,8 @@ import useMediaQuery from "use-media-antd-query";
 import { AppDispatch } from "../../store/ConfigStore";
 import { fetchCurrentUser } from "../../store/actions/AuthAction";
 import { getUserDetail } from "../../store/selectors/AuthSelectors";
+import secureLocalStorage from "react-secure-storage";
+import { useNavigate } from "react-router";
 const { Header } = Layout;
 
 const HeaderWrapper = () => {
@@ -14,7 +16,7 @@ const HeaderWrapper = () => {
   const windowSize = useMediaQuery();
   const dispatch = useDispatch<AppDispatch>();
   const userDetail = useSelector(getUserDetail);
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, []);
@@ -29,7 +31,14 @@ const HeaderWrapper = () => {
         )}
       </Flex>
 
-      <Button type="primary" ghost>
+      <Button
+        type="primary"
+        ghost
+        onClick={() => {
+          secureLocalStorage.clear();
+          navigate("/login");
+        }}
+      >
         {t("components.layout.logout")}
       </Button>
     </Header>

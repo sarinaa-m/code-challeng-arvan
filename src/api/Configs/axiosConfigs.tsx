@@ -1,5 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
+import secureLocalStorage from "react-secure-storage";
 
 export const api = axios.create({
   baseURL: "https://api.realworld.io/api/",
@@ -32,7 +33,7 @@ api.interceptors.response.use(undefined, async (error: any) => {
 // Add a request interceptor
 api.interceptors.request.use(
   async (config: any) => {
-    const tokenKey: any = localStorage.getItem("token");
+    const tokenKey: any = secureLocalStorage.getItem("token");
     if (tokenKey) {
       config.headers.Authorization = `Token ${tokenKey}`;
     }

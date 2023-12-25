@@ -8,6 +8,7 @@ import { AppDispatch } from "../../store/ConfigStore";
 import CustomButton from "../Button/CustomButton";
 import { loginUser, registerUser } from "../../store/actions/AuthAction";
 import "./_login.scss";
+import secureLocalStorage from "react-secure-storage";
 export const AuthForm: React.FC<IAuthFormProp> = ({
   title,
   additionalFields,
@@ -19,7 +20,7 @@ export const AuthForm: React.FC<IAuthFormProp> = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (secureLocalStorage.getItem("token")) {
       navigate("/articles");
     }
   }, []);

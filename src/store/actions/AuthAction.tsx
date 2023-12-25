@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DataProvider } from "../../api/DataProvider";
 import { message } from "antd";
+import secureLocalStorage from "react-secure-storage";
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
@@ -16,11 +17,15 @@ export const registerUser = createAsyncThunk(
         user: { ...payload },
       });
       message.success(`User added Successfully`);
-      localStorage.setItem("token", result.user.token);
+      secureLocalStorage.setItem("token", result.user.token);
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -42,12 +47,15 @@ export const loginUser = createAsyncThunk(
       const result = await DataProvider.post("users/login", {
         user: { ...payload },
       });
-      localStorage.setItem("token", result.user.token);
-      thunkAPI.dispatch(fetchCurrentUser());
+      secureLocalStorage.setItem("token", result.user.token);
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
@@ -63,8 +71,12 @@ export const fetchCurrentUser = createAsyncThunk(
       const result = await DataProvider.getList("user");
       return result;
     } catch (error: any) {
-      message.error(
-        `${error?.response?.data?.errors || error?.message || "Error"}`
+      Object.entries(error.response.data.errors).forEach(
+        ([key, value]: any) => {
+          message.error(
+            `${key}: ${value[0]}` || `${error?.message || "Error"}`
+          );
+        }
       );
       return thunkAPI.rejectWithValue(
         error?.response?.data?.errors || error?.message || "Error"
