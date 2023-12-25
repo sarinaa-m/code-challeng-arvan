@@ -1,50 +1,50 @@
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
-import React, { useEffect } from 'react'
+import ErrorBoundary from "antd/es/alert/ErrorBoundary";
+import React, { useEffect } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
   useNavigate,
-} from 'react-router-dom'
-import { ConfigProvider } from 'antd'
-import { AuthForm } from './components/authForm/AuthForm'
-import AppLayout from './components/layout/AppLayout'
-import ArticleLists from './components/atricles/ArticleLists'
-import CreateArticles from './components/atricles/CreateArticles'
+} from "react-router-dom";
+import { ConfigProvider } from "antd";
+import { AuthForm } from "./components/authForm/AuthForm";
+import AppLayout from "./components/layout/AppLayout";
+import ArticleLists from "./components/atricles/ArticleLists";
+import CreateArticles from "./components/atricles/CreateArticles";
 
 function App() {
   const router = createBrowserRouter(
     [
       {
-        path: '/login',
+        path: "/login",
         element: <AuthForm title="login" />,
       },
       {
-        path: '/register',
+        path: "/register",
         element: (
           <AuthForm
             title="register"
             isRegister
-            additionalFields={[{ label: 'user', name: 'username', rules: [] }]}
+            additionalFields={[{ label: "user", name: "username", rules: [] }]}
           />
         ),
       },
       {
-        path: 'articles',
+        path: "articles",
         element: (
           <ConfigProvider
             theme={{
               token: {
-                colorPrimary: ' #1c7cd5',
+                colorPrimary: " #1c7cd5",
               },
               components: {
                 Layout: {
-                  siderBg: '#1c7cd5',
-                  headerBg: '#373a3c',
+                  siderBg: "#1c7cd5",
+                  headerBg: "#373a3c",
                 },
                 Menu: {
-                  darkItemBg: '#1c7cd5',
-                  darkItemColor: '#fff',
-                  darkItemSelectedBg: 'rgba(255, 255, 255, 0.15)',
+                  darkItemBg: "#1c7cd5",
+                  darkItemColor: "#fff",
+                  darkItemSelectedBg: "rgba(255, 255, 255, 0.15)",
                 },
               },
             }}
@@ -54,33 +54,33 @@ function App() {
         ),
         children: [
           {
-            path: '',
+            path: "",
             element: <ArticleLists />,
           },
           {
-            path: 'page/:page',
+            path: "page/:page",
             element: <ArticleLists />,
           },
           {
-            path: 'create',
+            path: "create",
             element: <CreateArticles />,
           },
           {
-            path: 'edit/:id',
+            path: "edit/:id",
             element: <CreateArticles />,
           },
         ],
       },
     ],
     {
-      basename: '/',
+      basename: "/",
     }
-  )
+  );
   return (
     <ErrorBoundary>
       <RouterProvider router={router} />
     </ErrorBoundary>
-  )
+  );
 }
 
-export default App
+export default App;

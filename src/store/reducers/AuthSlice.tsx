@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { AUTH_STATE_NAME } from '../model/state'
-import { IAuth } from '../../interfaces/ILogin'
-import { fetchCurrentUser, registerUser } from '../actions/AuthAction'
+import { createSlice } from "@reduxjs/toolkit";
+import { AUTH_STATE_NAME } from "../model/state";
+import { IAuth } from "../../interfaces/ILogin";
+import { fetchCurrentUser, registerUser } from "../actions/AuthAction";
 
 const initialState: IAuth = {
   modifyUser: {
@@ -9,11 +9,11 @@ const initialState: IAuth = {
     error: null,
     data: {
       user: {
-        email: '',
-        username: '',
+        email: "",
+        username: "",
         bio: null,
-        image: '',
-        token: '',
+        image: "",
+        token: "",
       },
     },
   },
@@ -22,15 +22,15 @@ const initialState: IAuth = {
     error: null,
     userDetail: {
       user: {
-        email: '',
-        token: '',
-        username: '',
-        bio: '',
-        image: '',
+        email: "",
+        token: "",
+        username: "",
+        bio: "",
+        image: "",
       },
     },
   },
-}
+};
 
 export const AuthSlice = createSlice({
   name: AUTH_STATE_NAME,
@@ -39,33 +39,33 @@ export const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
-        state.modifyUser.loading = true
-        state.modifyUser.error = null
+        state.modifyUser.loading = true;
+        state.modifyUser.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.modifyUser.loading = false
-        state.modifyUser.error = null
-        state.modifyUser.data = action.payload
+        state.modifyUser.loading = false;
+        state.modifyUser.error = null;
+        state.modifyUser.data = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.modifyUser.loading = false
-        state.modifyUser.error = action.error.message
+        state.modifyUser.loading = false;
+        state.modifyUser.error = action.error.message;
       })
       /******************* FETCH CURRENT USER **********************/
       .addCase(fetchCurrentUser.pending, (state) => {
-        state.userData.loading = true
-        state.userData.error = null
+        state.userData.loading = true;
+        state.userData.error = null;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.userData.loading = false
-        state.userData.error = null
-        state.userData.userDetail = action.payload
+        state.userData.loading = false;
+        state.userData.error = null;
+        state.userData.userDetail = action.payload;
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
-        state.userData.loading = false
-        state.userData.error = action.error.message
-      })
+        state.userData.loading = false;
+        state.userData.error = action.error.message;
+      });
   },
-})
+});
 
-export default AuthSlice.reducer
+export default AuthSlice.reducer;
