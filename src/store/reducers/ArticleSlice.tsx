@@ -3,6 +3,7 @@ import { ARTICLE_STATE_NAME } from "../model/state";
 import { IArticleState } from "../../interfaces/IArticles";
 import {
   addArticle,
+  deleteArticle,
   fetchArticleById,
   fetchArticles,
   fetchTagList,
@@ -40,6 +41,10 @@ const initialState: IArticleState = {
         following: null,
       },
     },
+  },
+  deleteArticle: {
+    error: null,
+    loading: false,
   },
 };
 
@@ -127,6 +132,19 @@ export const ArticleSlice = createSlice({
       .addCase(fetchArticleById.rejected, (state, action) => {
         state.addArticle.loading = false;
         state.addArticle.error = action.error.message;
+      })
+      /********** DELETE ARTICLE **********/
+      .addCase(deleteArticle.pending, (state) => {
+        state.deleteArticle.loading = true;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.fulfilled, (state) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = action.error.message;
       });
   },
 });

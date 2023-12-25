@@ -10,6 +10,7 @@ const selectArticlesData = (article: RootState["articles"]) => ({
   tagData: article.tagList.data,
   addArticleLoading: article.addArticle.loading,
   addArticleData: article.addArticle.data,
+  deleteLoading: article.deleteArticle.loading,
 });
 
 export const getArticleData = createSelector(

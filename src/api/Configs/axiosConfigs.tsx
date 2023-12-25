@@ -26,31 +26,6 @@ const errorHandler = (error: any) => {
 };
 
 api.interceptors.response.use(undefined, async (error: any) => {
-  // const status = error?.code;
-  // switch (status) {
-  // TODO:check on 401
-  // case "ERR_NETWORK":
-  //   try {
-  //     return api(error.config);
-  //   } catch (refreshError) {
-  //     console.error("Token refresh error:", refreshError);
-  //     // Redirect to the login page or perform other actions as needed
-  //     throw refreshError;
-  //   }
-  // case 403:
-  //   try {
-
-  //     // If successful, retry the original request
-  //     return api(error.config);
-  //   } catch (refreshError) {
-  //     // Handle errors during token refresh
-  //     console.error("Token refresh error:", refreshError);
-  //     // Redirect to the login page or perform other actions as needed
-  //     throw refreshError;
-  //   }
-  // default:
-  //   break;
-  // }
   return errorHandler(error);
 });
 

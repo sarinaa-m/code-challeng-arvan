@@ -16,6 +16,7 @@ import { MoreOutlined } from "@ant-design/icons";
 import { MenuProps } from "rc-menu";
 import "./_article.scss";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "../shared/DeleteModal";
 const ArticleLists = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -26,6 +27,8 @@ const ArticleLists = () => {
     pageSize: 2,
     total: articleData.length,
   });
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteSlug, setDeleteSlug] = useState("");
   useEffect(() => {
     dispatch(fetchArticles());
   }, []);
@@ -85,7 +88,7 @@ const ArticleLists = () => {
       render: (_, { createdAt }) => moment(createdAt).format("MMMM Do YYYY"),
     },
     {
-      title: "Action",
+      title: "",
       key: "action",
       render: (_, { slug }) => (
         <Dropdown
@@ -102,15 +105,25 @@ const ArticleLists = () => {
   ];
   const onClickArticle = async ({ key, slug }: any) => {
     if (key === "delete") {
-      await dispatch(deleteArticle(slug));
+      setOpenModal(true);
+      setDeleteSlug(slug); // Set the slug for deletion
     } else if (key === "edit") {
       const result = await dispatch(fetchArticleById(slug));
       if (result.type === "articles/fetchArticleById/fulfilled") {
-        navigate(`edit/${slug}`, { state: { id: slug } });
+        navigate(`articles/edit/${slug}`, { state: { id: slug } });
       }
     }
   };
+  const handleDeleteConfirmed = async () => {
+    await dispatch(deleteArticle(deleteSlug));
+    setOpenModal(false);
+    setDeleteSlug("");
+  };
 
+  const handleDeleteCancelled = () => {
+    setOpenModal(false);
+    setDeleteSlug("");
+  };
   return (
     <div className="article-wrapper">
       <p className="header">{t("pages.article.articlePageTitle")}</p>
@@ -121,6 +134,11 @@ const ArticleLists = () => {
         dataSource={articleData}
         onChange={handleTableChange}
         pagination={pagination}
+      />
+      <DeleteModal
+        open={openModal}
+        onConfirm={handleDeleteConfirmed}
+        onCancel={handleDeleteCancelled}
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { IAuthFormProp } from "../../interfaces/ILogin";
+import { IAuthFormProp } from "../../interfaces/IAuth";
 import { AppDispatch } from "../../store/ConfigStore";
 import CustomButton from "../Button/CustomButton";
 import { loginUser, registerUser } from "../../store/actions/AuthAction";
