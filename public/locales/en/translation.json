@@ -5,7 +5,9 @@
     "newArticles": "New Articles"
   },
   "action": {
-    "btn": "{{name}}"
+    "btn": "{{name}}",
+    "yes": "Yes",
+    "no": "No"
   },
   "error": {
     "enterPassword": "Please input your Password!",
@@ -40,7 +42,9 @@
       "excerpt": "Excerpt",
       "created": "Created",
       "delete": "Delete",
-      "edit": "Edit"
+      "edit": "Edit",
+      "deleteArticle": "Delete Article",
+      "deleteConfirm": "Are you sure to delete Article?"
     }
   }
 }

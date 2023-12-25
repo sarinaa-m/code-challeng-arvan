@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { ARTICLE_STATE_NAME } from '../model/state'
-import { IArticleState } from '../../interfaces/IArticles'
+import { createSlice } from "@reduxjs/toolkit";
+import { ARTICLE_STATE_NAME } from "../model/state";
+import { IArticleState } from "../../interfaces/IArticles";
 import {
   addArticle,
+  deleteArticle,
   fetchArticleById,
   fetchArticles,
   fetchTagList,
-} from '../actions/ArticleAction'
-import { number } from 'yargs'
+} from "../actions/ArticleAction";
 
 const initialState: IArticleState = {
   articleLists: {
@@ -25,116 +25,128 @@ const initialState: IArticleState = {
     loading: false,
     error: null,
     data: {
-      article: {
-        slug: '',
-        title: '',
-        description: '',
-        body: '',
-        tagList: [],
-        createdAt: '',
-        updatedAt: '',
-        favorited: null,
-        favoritesCount: 0,
-        author: {
-          username: '',
-          bio: '',
-          image: '',
-          following: null,
-        },
+      slug: "",
+      title: "",
+      description: "",
+      body: "",
+      tagList: [],
+      createdAt: "",
+      updatedAt: "",
+      favorited: null,
+      favoritesCount: 0,
+      author: {
+        username: "",
+        bio: "",
+        image: "",
+        following: null,
       },
     },
   },
-}
+  deleteArticle: {
+    error: null,
+    loading: false,
+  },
+};
 
 export const ArticleSlice = createSlice({
   name: ARTICLE_STATE_NAME,
   initialState,
   reducers: {
     setTagList: (state, action) => {
-      state.tagList.data = [...state.tagList.data, action.payload]
+      state.tagList.data = [...state.tagList.data, action.payload];
     },
     resetAddArticle: (state) => {
       state.addArticle.data = {
-        article: {
-          slug: '',
-          title: '',
-          description: '',
-          body: '',
-          tagList: [],
-          createdAt: '',
-          updatedAt: '',
-          favorited: null,
-          favoritesCount: 0,
-          author: {
-            username: '',
-            bio: '',
-            image: '',
-            following: null,
-          },
+        slug: "",
+        title: "",
+        description: "",
+        body: "",
+        tagList: [],
+        createdAt: "",
+        updatedAt: "",
+        favorited: null,
+        favoritesCount: 0,
+        author: {
+          username: "",
+          bio: "",
+          image: "",
+          following: null,
         },
-      }
+      };
     },
   },
   extraReducers: (builder) => {
     builder
       /********** FETCH ARTICLES **********/
       .addCase(fetchArticles.pending, (state) => {
-        state.articleLists.loading = true
-        state.articleLists.error = null
+        state.articleLists.loading = true;
+        state.articleLists.error = null;
       })
       .addCase(fetchArticles.fulfilled, (state, action) => {
-        state.articleLists.loading = false
-        state.articleLists.data = action.payload.articles
-        state.articleLists.articlesCount = action.payload.articlesCount
-        state.articleLists.error = null
+        state.articleLists.loading = false;
+        state.articleLists.data = action.payload.articles;
+        state.articleLists.articlesCount = action.payload.articlesCount;
+        state.articleLists.error = null;
       })
       .addCase(fetchArticles.rejected, (state, action) => {
-        state.articleLists.loading = false
-        state.articleLists.error = action.error.message
+        state.articleLists.loading = false;
+        state.articleLists.error = action.error.message;
       })
       /********** FETCH TAGS **********/
       .addCase(fetchTagList.pending, (state) => {
-        state.tagList.loading = true
-        state.tagList.error = null
+        state.tagList.loading = true;
+        state.tagList.error = null;
       })
       .addCase(fetchTagList.fulfilled, (state, action) => {
-        state.tagList.loading = false
-        state.tagList.data = action.payload.tags
-        state.tagList.error = null
+        state.tagList.loading = false;
+        state.tagList.data = action.payload.tags;
+        state.tagList.error = null;
       })
       .addCase(fetchTagList.rejected, (state, action) => {
-        state.tagList.loading = false
-        state.tagList.error = action.error.message
+        state.tagList.loading = false;
+        state.tagList.error = action.error.message;
       })
       /********** ADD ARTICLES **********/
       .addCase(addArticle.pending, (state) => {
-        state.addArticle.loading = true
-        state.addArticle.error = null
+        state.addArticle.loading = true;
+        state.addArticle.error = null;
       })
-      .addCase(addArticle.fulfilled, (state, action) => {
-        state.addArticle.loading = false
-        state.addArticle.error = null
+      .addCase(addArticle.fulfilled, (state) => {
+        state.addArticle.loading = false;
+        state.addArticle.error = null;
       })
       .addCase(addArticle.rejected, (state, action) => {
-        state.addArticle.loading = false
-        state.addArticle.error = action.error.message
+        state.addArticle.loading = false;
+        state.addArticle.error = action.error.message;
       })
       /********** FETCH ARTICLE BY ID **********/
       .addCase(fetchArticleById.pending, (state) => {
-        state.addArticle.loading = true
-        state.addArticle.error = null
+        state.addArticle.loading = true;
+        state.addArticle.error = null;
       })
       .addCase(fetchArticleById.fulfilled, (state, action) => {
-        state.addArticle.loading = false
-        state.addArticle.data = action.payload
-        state.addArticle.error = null
+        state.addArticle.loading = false;
+        state.addArticle.data = action.payload.article;
+        state.addArticle.error = null;
       })
       .addCase(fetchArticleById.rejected, (state, action) => {
-        state.addArticle.loading = false
-        state.addArticle.error = action.error.message
+        state.addArticle.loading = false;
+        state.addArticle.error = action.error.message;
       })
+      /********** DELETE ARTICLE **********/
+      .addCase(deleteArticle.pending, (state) => {
+        state.deleteArticle.loading = true;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.fulfilled, (state) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = action.error.message;
+      });
   },
-})
-export const { setTagList, resetAddArticle } = ArticleSlice.actions
-
-export default ArticleSlice.reducer
+});
+export const { setTagList, resetAddArticle } = ArticleSlice.actions;
+export default ArticleSlice.reducer;

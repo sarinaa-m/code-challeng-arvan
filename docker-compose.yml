@@ -1,0 +1,5 @@
+services:
+  influx:
+    image: 'arvan-challeng'
+    ports:
+      - 3000:3000
