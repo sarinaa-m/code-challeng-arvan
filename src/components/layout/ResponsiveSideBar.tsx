@@ -1,17 +1,17 @@
-import { Button, Col, Drawer, Menu, Row } from 'antd'
-import { MenuProps } from 'rc-menu'
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { MenuOutlined } from '@ant-design/icons'
-type MenuItem = Required<MenuProps>['items'][number]
+import { Button, Col, Drawer, Menu, Row } from "antd";
+import { MenuProps } from "rc-menu";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { MenuOutlined } from "@ant-design/icons";
+type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(
   label: React.ReactNode,
   key?: React.Key | null,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group'
+  type?: "group"
 ): MenuItem {
   return {
     key,
@@ -19,24 +19,24 @@ function getItem(
     children,
     label,
     type,
-  } as MenuItem
+  } as MenuItem;
 }
 
 const ResponsiveSideBar = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const { t } = useTranslation()
+  const [open, setOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const items: MenuItem[] = [
-    getItem(<Link to="/articles">{t('menu.allArticles')}</Link>, 'all'),
-    getItem(<Link to="/articles/create">{t('menu.newArticles')}</Link>, 'new'),
-  ]
+    getItem(<Link to="/articles">{t("menu.allArticles")}</Link>, "all"),
+    getItem(<Link to="/articles/create">{t("menu.newArticles")}</Link>, "new"),
+  ];
   const showDrawer = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   const onClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -47,14 +47,14 @@ const ResponsiveSideBar = () => {
         icon={<MenuOutlined color="#fff" />}
       />
       <Drawer
-        placement={'left'}
+        placement={"left"}
         onClose={onClose}
         open={open}
-        title={t('menu.menu')}
+        title={t("menu.menu")}
         closable={false}
-        key={'left'}
+        key={"left"}
         contentWrapperStyle={{
-          width: 'min(20rem, 100vw)',
+          width: "min(20rem, 100vw)",
         }}
         styles={{
           body: {
@@ -77,6 +77,6 @@ const ResponsiveSideBar = () => {
         </Row>
       </Drawer>
     </>
-  )
-}
-export default ResponsiveSideBar
+  );
+};
+export default ResponsiveSideBar;

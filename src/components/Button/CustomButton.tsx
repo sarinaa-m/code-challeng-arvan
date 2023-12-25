@@ -1,7 +1,7 @@
-import { Button } from 'antd'
-import React, { FC } from 'react'
-import { ICostumeBtn } from '../../interfaces/IButton'
-import { useTranslation } from 'react-i18next'
+import { Button } from "antd";
+import React, { FC } from "react";
+import { ICostumeBtn } from "../../interfaces/IButton";
+import { useTranslation } from "react-i18next";
 
 const CustomButton: React.FC<ICostumeBtn> = ({
   block,
@@ -10,22 +10,22 @@ const CustomButton: React.FC<ICostumeBtn> = ({
   type,
   loading,
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const onClickBtn = () => {
-    onSubmit()
-  }
+    onSubmit();
+  };
   return (
     <Button
       onClick={() => {
-        onClickBtn()
+        onClickBtn();
       }}
       block={block}
       type={type}
       loading={loading}
     >
-      {t('action.btn', { name: name })}
+      {t("action.btn", { name: name })}
     </Button>
-  )
-}
+  );
+};
 
-export default CustomButton
+export default CustomButton;

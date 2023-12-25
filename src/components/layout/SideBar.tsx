@@ -1,22 +1,22 @@
-import { Menu, MenuProps, Layout } from 'antd'
+import { Menu, MenuProps, Layout } from "antd";
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
-} from '@ant-design/icons'
-import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const { Sider } = Layout
-type MenuItem = Required<MenuProps>['items'][number]
+const { Sider } = Layout;
+type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(
   label: React.ReactNode,
   key?: React.Key | null,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group'
+  type?: "group"
 ): MenuItem {
   return {
     key,
@@ -24,29 +24,29 @@ function getItem(
     children,
     label,
     type,
-  } as MenuItem
+  } as MenuItem;
 }
 
 const SideBar = function () {
-  const { t } = useTranslation()
-  const location = useLocation()
-  const [activeMenu, setActiveMenu] = useState<string[]>(['article'])
+  const { t } = useTranslation();
+  const location = useLocation();
+  const [activeMenu, setActiveMenu] = useState<string[]>(["article"]);
   const items: MenuItem[] = [
-    getItem(<Link to="/articles">{t('menu.allArticles')}</Link>, 'article'),
+    getItem(<Link to="/articles">{t("menu.allArticles")}</Link>, "article"),
     getItem(
-      <Link to="/articles/create">{t('menu.newArticles')}</Link>,
-      'create'
+      <Link to="/articles/create">{t("menu.newArticles")}</Link>,
+      "create"
     ),
-  ]
-  console.log(location, 'location')
+  ];
+  console.log(location, "location");
   useEffect(() => {
-    if (location.pathname.includes('article')) {
-      setActiveMenu(['article'])
+    if (location.pathname.includes("article")) {
+      setActiveMenu(["article"]);
     }
-    if (location.pathname.includes('create')) {
-      setActiveMenu(['create'])
+    if (location.pathname.includes("create")) {
+      setActiveMenu(["create"]);
     }
-  }, [location])
+  }, [location]);
 
   return (
     <Sider>
@@ -57,7 +57,7 @@ const SideBar = function () {
         selectedKeys={activeMenu}
       />
     </Sider>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;
