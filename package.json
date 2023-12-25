@@ -39,7 +39,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": ".",
+  "homepage": "http://localhost:3000/login",
   "eslintConfig": {
     "extends": [
       "react-app",
