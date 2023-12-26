@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IAuthFormProp } from "../../interfaces/IAuth";
 import { AppDispatch } from "../../store/ConfigStore";
 import CustomButton from "../Button/CustomButton";
 import { loginUser, registerUser } from "../../store/actions/AuthAction";
 import "./_login.scss";
 import secureLocalStorage from "react-secure-storage";
+import { getUserDetail } from "../../store/selectors/AuthSelectors";
 export const AuthForm: React.FC<IAuthFormProp> = ({
   title,
   additionalFields,
@@ -18,7 +19,7 @@ export const AuthForm: React.FC<IAuthFormProp> = ({
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
+  const { registerLoading, loginLoading } = useSelector(getUserDetail);
   useEffect(() => {
     if (secureLocalStorage.getItem("token")) {
       navigate("/articles");
@@ -94,7 +95,7 @@ export const AuthForm: React.FC<IAuthFormProp> = ({
           name={isRegister ? "Register" : "Login"}
           type="primary"
           onSubmit={form.submit}
-          loading={false}
+          loading={isRegister ? registerLoading : loginLoading}
         />
       </Form.Item>
     </Form>

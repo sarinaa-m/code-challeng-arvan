@@ -28,8 +28,13 @@ export interface IAuth {
     };
   };
   userData: IUserData;
+  login: ILogin;
 }
 
+interface ILogin {
+  loading: boolean;
+  error: null | string | undefined;
+}
 interface IUserData {
   loading: boolean;
   error: null | string | undefined;
