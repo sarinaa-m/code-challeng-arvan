@@ -20,7 +20,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   return (
     <Modal
       title={t("pages.article.deleteArticle")}
-      visible={open}
+      open={open}
       centered
       footer={[
         <Button key="cancel" type="default" onClick={onCancel}>
