@@ -36,6 +36,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
           {t("action.yes")}
         </Button>,
       ]}
+      onCancel={onCancel}
     >
       {t("pages.article.deleteConfirm")}
     </Modal>
