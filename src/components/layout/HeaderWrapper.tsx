@@ -15,7 +15,7 @@ const HeaderWrapper = () => {
   const { t } = useTranslation();
   const windowSize = useMediaQuery();
   const dispatch = useDispatch<AppDispatch>();
-  const userDetail = useSelector(getUserDetail);
+  const { user } = useSelector(getUserDetail);
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchCurrentUser());
@@ -27,7 +27,7 @@ const HeaderWrapper = () => {
         {(windowSize === "xs" || windowSize === "sm") && <ResponsiveSideBar />}
         <p>{t("components.layout.headerTitle")}</p>
         {windowSize !== "xs" && windowSize !== "sm" && (
-          <div className="header-detail"> welcome {userDetail.username}</div>
+          <div className="header-detail"> welcome {user.username}</div>
         )}
       </Flex>
 

@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AUTH_STATE_NAME } from "../model/state";
 import { IAuth } from "../../interfaces/IAuth";
-import { fetchCurrentUser, registerUser } from "../actions/AuthAction";
+import {
+  fetchCurrentUser,
+  loginUser,
+  registerUser,
+} from "../actions/AuthAction";
 
 const initialState: IAuth = {
   modifyUser: {
@@ -30,6 +34,10 @@ const initialState: IAuth = {
       },
     },
   },
+  login: {
+    loading: false,
+    error: null,
+  },
 };
 
 export const AuthSlice = createSlice({
@@ -38,6 +46,7 @@ export const AuthSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      /******************* REGISTER USER **********************/
       .addCase(registerUser.pending, (state) => {
         state.modifyUser.loading = true;
         state.modifyUser.error = null;
@@ -50,6 +59,19 @@ export const AuthSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.modifyUser.loading = false;
         state.modifyUser.error = action.error.message;
+      })
+      /******************* LOGIN **********************/
+      .addCase(loginUser.pending, (state) => {
+        state.login.loading = true;
+        state.login.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state) => {
+        state.login.loading = false;
+        state.login.error = null;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.login.loading = false;
+        state.login.error = action.error.message;
       })
       /******************* FETCH CURRENT USER **********************/
       .addCase(fetchCurrentUser.pending, (state) => {

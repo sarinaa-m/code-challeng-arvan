@@ -65,7 +65,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const fetchCurrentUser = createAsyncThunk(
-  "auth/loginUser",
+  "auth/fetchCurrentUser",
   async (_, thunkAPI: any) => {
     try {
       const result = await DataProvider.getList("user");
