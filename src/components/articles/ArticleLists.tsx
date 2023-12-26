@@ -1,10 +1,10 @@
-import { Button, Dropdown, Space, Table, Tag } from "antd";
+import { Dropdown, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/ConfigStore";
-import { getArticleData } from "../../store/selectores/ArticleSelector";
+import { getArticleData } from "../../store/selectors/ArticleSelector";
 import { IArticleData } from "../../interfaces/IArticles";
 import {
   deleteArticle,
@@ -15,20 +15,32 @@ import moment from "moment";
 import { MoreOutlined } from "@ant-design/icons";
 import { MenuProps } from "rc-menu";
 import "./_article.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import DeleteModal from "../shared/DeleteModal";
 const ArticleLists = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { articleCount, data, loading } = useSelector(getArticleData);
+  const location = useLocation();
+  const { articleData, articleLoading } = useSelector(getArticleData);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 2,
-    total: data.length,
+    total: articleData.length,
   });
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteSlug, setDeleteSlug] = useState("");
   useEffect(() => {
     dispatch(fetchArticles());
   }, []);
+
+  useEffect(() => {
+    const urlPath = location.pathname.split("/");
+    const pageSize = urlPath[3];
+    if (pageSize) {
+      setPagination((old) => ({ ...old, current: Number(pageSize) }));
+    }
+  }, [location]);
 
   const items: MenuProps["items"] = [
     {
@@ -52,6 +64,8 @@ const ArticleLists = () => {
       title: "#",
       dataIndex: "key",
       rowScope: "row",
+      render: (value, item, index) =>
+        (pagination.current - 1) * pagination.pageSize + index + 1,
     },
     {
       title: "Title",
@@ -83,7 +97,7 @@ const ArticleLists = () => {
       render: (_, { createdAt }) => moment(createdAt).format("MMMM Do YYYY"),
     },
     {
-      title: "Action",
+      title: "",
       key: "action",
       render: (_, { slug }) => (
         <Dropdown
@@ -98,25 +112,42 @@ const ArticleLists = () => {
       ),
     },
   ];
-  const onClickArticle = ({ key, slug }: any) => {
+  const onClickArticle = async ({ key, slug }: any) => {
     if (key === "delete") {
-      dispatch(deleteArticle(slug));
+      setOpenModal(true);
+      setDeleteSlug(slug); // Set the slug for deletion
     } else if (key === "edit") {
-      dispatch(fetchArticleById(slug));
-      navigate(`edit/${slug}`, { state: { id: slug } });
+      const result = await dispatch(fetchArticleById(slug));
+      if (result.type === "articles/fetchArticleById/fulfilled") {
+        navigate(`/articles/edit/${slug}`, { state: { id: slug } });
+      }
     }
   };
+  const handleDeleteConfirmed = async () => {
+    await dispatch(deleteArticle(deleteSlug));
+    setOpenModal(false);
+    setDeleteSlug("");
+  };
 
+  const handleDeleteCancelled = () => {
+    setOpenModal(false);
+    setDeleteSlug("");
+  };
   return (
     <div className="article-wrapper">
       <p className="header">{t("pages.article.articlePageTitle")}</p>
       <Table
-        loading={loading}
+        loading={articleLoading}
         scroll={{ x: 500 }}
         columns={columns}
-        dataSource={data}
+        dataSource={articleData}
         onChange={handleTableChange}
         pagination={pagination}
+      />
+      <DeleteModal
+        open={openModal}
+        onConfirm={handleDeleteConfirmed}
+        onCancel={handleDeleteCancelled}
       />
     </div>
   );

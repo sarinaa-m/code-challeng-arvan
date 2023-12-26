@@ -5,31 +5,23 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomButton from "../Button/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addArticleData,
-  getArticleById,
-  getTagData,
-} from "../../store/selectores/ArticleSelector";
+import { getArticleData } from "../../store/selectors/ArticleSelector";
 import { AppDispatch } from "../../store/ConfigStore";
 import {
   addArticle,
-  fetchArticleById,
   fetchTagList,
   updateArticle,
 } from "../../store/actions/ArticleAction";
 import { setTagList } from "../../store/reducers/ArticleSlice";
-import { redirect, useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const CreateArticles = function () {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
-  const { id: slug } = useParams();
-  const { data, loading } = useSelector(getTagData);
-  const { loading: articleLoading } = useSelector(addArticleData);
-  const { item } = useSelector(getArticleById);
+  const { addArticleLoading, addArticleData, tagData, tagLoading } =
+    useSelector(getArticleData);
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -38,17 +30,14 @@ const CreateArticles = function () {
   }, []);
 
   useEffect(() => {
-    if (item?.slug) {
-      form.setFieldsValue(item);
-      setSelectedTags(item.tagList || []);
+    if (addArticleData?.slug) {
+      form.setFieldsValue(addArticleData);
+      setSelectedTags(addArticleData.tagList || []);
+    } else {
+      form.resetFields();
+      setSelectedTags([]);
     }
-  }, [item]);
-
-  useEffect(() => {
-    if (slug) {
-      dispatch(fetchArticleById(slug));
-    }
-  }, []);
+  }, [addArticleData]);
 
   const onFinish = async (values: any) => {
     const formValues = {
@@ -76,8 +65,8 @@ const CreateArticles = function () {
   };
 
   const onRenderTagList = () => {
-    const sortedDataTag: any = [...data];
-    if (loading) {
+    const sortedDataTag: any = [...tagData];
+    if (tagLoading) {
       return Array(10)
         .fill(null)
         .map((_, index) => (
@@ -140,7 +129,7 @@ const CreateArticles = function () {
     }
   };
 
-  return articleLoading ? (
+  return addArticleLoading ? (
     <Spin className="loading" size="large" />
   ) : (
     <Form
@@ -200,7 +189,7 @@ const CreateArticles = function () {
               name="submit"
               type="primary"
               onSubmit={form.submit}
-              loading={articleLoading}
+              loading={addArticleLoading}
             />
           </Form.Item>
         </Col>

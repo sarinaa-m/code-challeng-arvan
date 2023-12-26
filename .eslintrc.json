@@ -11,7 +11,7 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
-      "tsx":true
+      "tsx": true
     }
   },
   "env": {
@@ -27,6 +27,10 @@
   "rules": {
     "react/prop-types": "off", // Disable prop-types as we use TypeScript for type checking
     "@typescript-eslint/explicit-function-return-type": "off",
-    "prettier/prettier": ["error", { "singleQuote": false, "semi": true }]
+    "prettier/prettier": ["error", { "singleQuote": false, "semi": true }],
+    "no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ]
   }
 }

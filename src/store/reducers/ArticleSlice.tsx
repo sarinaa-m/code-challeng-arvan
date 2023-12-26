@@ -3,11 +3,11 @@ import { ARTICLE_STATE_NAME } from "../model/state";
 import { IArticleState } from "../../interfaces/IArticles";
 import {
   addArticle,
+  deleteArticle,
   fetchArticleById,
   fetchArticles,
   fetchTagList,
 } from "../actions/ArticleAction";
-import { number } from "yargs";
 
 const initialState: IArticleState = {
   articleLists: {
@@ -25,7 +25,38 @@ const initialState: IArticleState = {
     loading: false,
     error: null,
     data: {
-      article: {
+      slug: "",
+      title: "",
+      description: "",
+      body: "",
+      tagList: [],
+      createdAt: "",
+      updatedAt: "",
+      favorited: null,
+      favoritesCount: 0,
+      author: {
+        username: "",
+        bio: "",
+        image: "",
+        following: null,
+      },
+    },
+  },
+  deleteArticle: {
+    error: null,
+    loading: false,
+  },
+};
+
+export const ArticleSlice = createSlice({
+  name: ARTICLE_STATE_NAME,
+  initialState,
+  reducers: {
+    setTagList: (state, action) => {
+      state.tagList.data = [...state.tagList.data, action.payload];
+    },
+    resetAddArticle: (state) => {
+      state.addArticle.data = {
         slug: "",
         title: "",
         description: "",
@@ -40,37 +71,6 @@ const initialState: IArticleState = {
           bio: "",
           image: "",
           following: null,
-        },
-      },
-    },
-  },
-};
-
-export const ArticleSlice = createSlice({
-  name: ARTICLE_STATE_NAME,
-  initialState,
-  reducers: {
-    setTagList: (state, action) => {
-      state.tagList.data = [...state.tagList.data, action.payload];
-    },
-    resetAddArticle: (state) => {
-      state.addArticle.data = {
-        article: {
-          slug: "",
-          title: "",
-          description: "",
-          body: "",
-          tagList: [],
-          createdAt: "",
-          updatedAt: "",
-          favorited: null,
-          favoritesCount: 0,
-          author: {
-            username: "",
-            bio: "",
-            image: "",
-            following: null,
-          },
         },
       };
     },
@@ -111,7 +111,7 @@ export const ArticleSlice = createSlice({
         state.addArticle.loading = true;
         state.addArticle.error = null;
       })
-      .addCase(addArticle.fulfilled, (state, action) => {
+      .addCase(addArticle.fulfilled, (state) => {
         state.addArticle.loading = false;
         state.addArticle.error = null;
       })
@@ -126,15 +126,27 @@ export const ArticleSlice = createSlice({
       })
       .addCase(fetchArticleById.fulfilled, (state, action) => {
         state.addArticle.loading = false;
-        state.addArticle.data = action.payload;
+        state.addArticle.data = action.payload.article;
         state.addArticle.error = null;
       })
       .addCase(fetchArticleById.rejected, (state, action) => {
         state.addArticle.loading = false;
         state.addArticle.error = action.error.message;
+      })
+      /********** DELETE ARTICLE **********/
+      .addCase(deleteArticle.pending, (state) => {
+        state.deleteArticle.loading = true;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.fulfilled, (state) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = null;
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
+        state.deleteArticle.loading = false;
+        state.deleteArticle.error = action.error.message;
       });
   },
 });
 export const { setTagList, resetAddArticle } = ArticleSlice.actions;
-
 export default ArticleSlice.reducer;

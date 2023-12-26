@@ -1,13 +1,18 @@
 export interface IArticleState {
   articleLists: IArticleList;
   tagList: ITagList;
+  deleteArticle: IDeleteArticle;
   addArticle: IAddArticle;
 }
 
+interface IDeleteArticle {
+  loading: boolean;
+  error: null | string | undefined;
+}
 interface IAddArticle {
   loading: boolean;
   error: null | undefined | string;
-  data?: { article: IArticleData };
+  data?: IArticleData;
 }
 export interface ITagList {
   loading: boolean;

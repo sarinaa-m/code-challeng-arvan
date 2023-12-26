@@ -27,8 +27,28 @@ const ResponsiveSideBar = () => {
   const { t } = useTranslation();
 
   const items: MenuItem[] = [
-    getItem(<Link to="/articles">{t("menu.allArticles")}</Link>, "all"),
-    getItem(<Link to="/articles/create">{t("menu.newArticles")}</Link>, "new"),
+    getItem(
+      <Link
+        onClick={() => {
+          setOpen(false);
+        }}
+        to="/articles"
+      >
+        {t("menu.allArticles")}
+      </Link>,
+      "all"
+    ),
+    getItem(
+      <Link
+        onClick={() => {
+          setOpen(false);
+        }}
+        to="/articles/create"
+      >
+        {t("menu.newArticles")}
+      </Link>,
+      "new"
+    ),
   ];
   const showDrawer = () => {
     setOpen(!open);
@@ -51,7 +71,7 @@ const ResponsiveSideBar = () => {
         onClose={onClose}
         open={open}
         title={t("menu.menu")}
-        closable={false}
+        closable={true}
         key={"left"}
         contentWrapperStyle={{
           width: "min(20rem, 100vw)",

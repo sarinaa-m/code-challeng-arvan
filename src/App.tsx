@@ -1,15 +1,11 @@
 import ErrorBoundary from "antd/es/alert/ErrorBoundary";
-import React, { useEffect } from "react";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  useNavigate,
-} from "react-router-dom";
+import React from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { AuthForm } from "./components/authForm/AuthForm";
 import AppLayout from "./components/layout/AppLayout";
-import ArticleLists from "./components/atricles/ArticleLists";
-import CreateArticles from "./components/atricles/CreateArticles";
+import ArticleLists from "./components/articles/ArticleLists";
+import CreateArticles from "./components/articles/CreateArticles";
 
 function App() {
   const router = createBrowserRouter(
@@ -46,6 +42,7 @@ function App() {
                   darkItemColor: "#fff",
                   darkItemSelectedBg: "rgba(255, 255, 255, 0.15)",
                 },
+                Modal: { wireframe: true },
               },
             }}
           >
