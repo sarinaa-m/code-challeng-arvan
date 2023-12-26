@@ -42,6 +42,7 @@ function App() {
                   darkItemColor: "#fff",
                   darkItemSelectedBg: "rgba(255, 255, 255, 0.15)",
                 },
+                Modal: { wireframe: true },
               },
             }}
           >
